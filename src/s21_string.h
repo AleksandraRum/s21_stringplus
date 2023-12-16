@@ -14,7 +14,7 @@
 #define s21_NULL (void*)0
 
 #define ERR_LIST { \
-    "No error", \
+    "Success", \
     "Operation not permitted", \
     "No such file or directory", \
     "No such process", \
