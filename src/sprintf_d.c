@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-
+#include <locale.h>
 #include "s21_string.h"
 
 
@@ -15,7 +15,7 @@ int s21_sprintf(char* str, const char* format, ...)
     va_start(list, format);
     char* ptr = str;
     char specif[18] = "diouxXcsnpfFeEgG%";
-    long long int var_len;
+    // long long int var_len;
     while (*format)
     {
         if (*format == '%')
@@ -341,9 +341,9 @@ char* spec_decimal(long long int var_len, Flags flags, char *str)
     return str;
 }
 
-int s21_itoa(Flags flags, long long int var_len, size_t size, char *decimal_str, char *str)
+int s21_itoa(Flags flags, long long int var_len, size_t size, char *decimal_str)
 {
-    int i = 0;
+    size_t i = 0;
     int len = var_len;
     if (var_len < 0) 
         len = -len;         
@@ -420,12 +420,12 @@ char* spec_float(double var_len, Flags flags, char *str)
 }
 int s21_utoa(Flags flags, long int fract, long int integ, size_t size, char *fract_str, size_t size_i)
 {
-    int i = 0;
+    size_t i = 0;
     long int copy_int = integ;
 	long int copy_fr = fract;
 	printf("%ld\n", copy_fr);
     if (integ < 0) 
-        copy_int = -copy_int;     
+    {  copy_int = -copy_int;     }
 	if ((flags.precision > 0) || ((flags.precision == 0) && (flags.is_precision == 0))) {
 		do {     
         fract_str[i] = copy_fr % 10 + '0'; 
@@ -443,4 +443,14 @@ int s21_utoa(Flags flags, long int fract, long int integ, size_t size, char *fra
 	//printf("%d\n", i);
 	return i;
 
+}
+
+int main()
+{
+	setlocale(LC_ALL, "ru");
+	char s[15];
+	int c = 300;
+	s21_sprintf(s, "Hello %d", c); //c);
+	//sprintf_s(s, "Hello %u", c);//0x0000FF);
+	return 0;
 }

@@ -36,7 +36,7 @@ int s21_memcmp(const void *str1, const void *str2, size_t n);
 void *s21_memset(void *str, int c, size_t n);
 int s21_sprintf(char* str, const char* format, ...);
 char* spec_decimal(long long int var_len, Flags flags, char *str);
-int s21_itoa(Flags flags, long long int var_len, size_t size, char *decimal_str, char *str);
+int s21_itoa(Flags flags, long long int var_len, size_t size, char *decimal_str);
 void parsing_func(char* str, const char* format, Flags flags, va_list* args);
 long long int handle_h_l(Flags *flags, va_list* args, const char* format);
 const char *set_flags(const char* format, Flags* flags);
