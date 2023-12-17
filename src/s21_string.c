@@ -1,5 +1,19 @@
 #include "s21_string.h"
 
+char *s21_strncat(char *dest, const char *src, s21_size_t n) {
+  unsigned int dest_length = 0;
+  unsigned int src_length = 0;
+  while (dest[dest_length] != '\0') {
+    dest_length++;
+  }
+  while (src[src_length] != '\0' && src_length < n) {
+    dest[dest_length + src_length] = src[src_length];
+    src_length++;
+  }
+  dest[dest_length + src_length] = '\0';
+  return dest;
+}
+
 s21_size_t s21_strlen(const char *str) {
   s21_size_t i = 0, res = 0;
   while (str[i] != '\0') {
@@ -176,3 +190,4 @@ char* s21_strtok(char* str, const char* delim) {
     free(deliDict);
     return str;
 }
+>>>>>>> src/s21_string.c
