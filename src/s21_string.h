@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <math.h>
 
 #define BUFFER 10000
 #define s21_size_t unsigned long long
@@ -20,6 +21,7 @@ typedef struct
 	int zero;
 	int star;
 	int precision;		
+	int is_precision;
 	int plus;
 	int space;
 	int hash;
@@ -40,6 +42,8 @@ long long int handle_h_l(Flags *flags, va_list* args, const char* format);
 const char *set_flags(const char* format, Flags* flags);
 const char *get_width_accuracy(const char* format, Flags* flags, va_list args);
 const char *set_length(const char* format, Flags* flags);
+char* spec_float(double var_len, Flags flags, char *str);
+int s21_utoa(Flags flags, long int fract, long int integ, size_t size, char *fract_str, size_t size_i);
 
 #endif
 
