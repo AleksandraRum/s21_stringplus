@@ -87,7 +87,7 @@ const char *get_width_accuracy(const char* format, Flags* flags, va_list args)
 	char pres_buff[100] = "";
 	bool was_dot = false;
 	const char* ptr1 = format;
-	//printf("%s\n", format);
+	
 	
 	int counter = 0;
     if (strchr(format, '.') != NULL) 
@@ -100,7 +100,7 @@ const char *get_width_accuracy(const char* format, Flags* flags, va_list args)
 	{
 	    for (size_t i = 0; format[i] != '.'; i++)
 	    {
-			//printf("%c\n", format[i]);
+			
 			if (s21_is_digit(format[i])) {
 					char buf[2] = "";
 					buf[0] = format[i];
@@ -109,7 +109,7 @@ const char *get_width_accuracy(const char* format, Flags* flags, va_list args)
             }
             if (format[i] == '*'){
                 flags->width = va_arg(args, int);
-                    //format = format + i;
+                   
             }    
 				
 			if (flags->width < 0)
@@ -118,9 +118,7 @@ const char *get_width_accuracy(const char* format, Flags* flags, va_list args)
 				flags->width *= -1;
 				flags->minus = 1;
 			}
-			//counter = i;
-				//}
-			//}
+			
 		}
 		for (int i = dot; format[i] != '\0'; i++)    
 
@@ -135,7 +133,6 @@ const char *get_width_accuracy(const char* format, Flags* flags, va_list args)
 				
         if (format[i] == '*'){
         flags->precision = va_arg(args, int);
-                    //format = format + i;
         }   
 		counter = i; 
 	    
@@ -239,7 +236,6 @@ void parsing_func(char* str, const char* format, Flags flags, va_list* args) {
     case 'f': 	
 	{
 		double var_len = va_arg(*args, double);
-		//printf("%lf\n", var_len);
 		str = spec_float(var_len, flags, str);
 	} break;
 
@@ -258,26 +254,25 @@ char* spec_decimal(long long int var_len, Flags flags, char *str)
         var /= 10;
         size++;
     }
+
     if((size_t)flags.width > size) size = flags.width;
     if((size_t)flags.precision > size) size = flags.precision;
    
-	char *decimal_str = malloc(sizeof(char) * size);
-	
-    int i = s21_itoa(flags, var_len, size, decimal_str, str);
+	char *decimal_str = malloc(sizeof(char) * (size));
+    int i = s21_itoa(flags, var_len, size, decimal_str);
 	
 	char c = ' ';
 	if (flags.precision > flags.width)  c = '0';
-	if (i == size)
+	if ((size_t) i == size)
 	{
 		if ((flags.space == 1) && (var_len > 0))
 		{
 			*str = ' ';
 			str++;
 		}
-		
 	}
 	
-    if ((i < size) && (flags.precision > flags.width))
+    if (((size_t) i < size) && (flags.precision > flags.width))
 	{
 		if (flags.plus == 1)
 		{
@@ -300,17 +295,18 @@ char* spec_decimal(long long int var_len, Flags flags, char *str)
 			    str++;
 			}
 		}
-		for (int k = 0; k < (size - i); k++)
+		for (size_t  k = 0; k < (size - (size_t)i); k++)
 		{ 
-		    *str = c;
-			str++;
+		*str = c;
+		str++;
 		}
     }
-	if ((i < size) && (flags.precision < flags.width))
+
+	if (((size_t)i < size) && (flags.precision < flags.width))
 	{
 	    if (flags.minus != 1)
 	    {
-	        for (int k = 0; k < (size - i); k++)
+	        for (size_t k = 0; k < (size - (size_t)i); k++)
 		    { 
 		        *str = c;
 			    str++;
@@ -321,15 +317,16 @@ char* spec_decimal(long long int var_len, Flags flags, char *str)
 		    *str = ' ';
 			str++;
 		}
+		
 	}
 	for (int j = i - 1; j >= 0; j--)
     {
         *str = decimal_str[j];
         str++;
     }
-	if ((i < size) && (flags.minus == 1) && (flags.precision < flags.width))
+	if (((size_t)i < size) && (flags.minus == 1) && (flags.precision < flags.width))
 	{
-		while (size > str - ptr)
+		while (size > (size_t) (str - ptr))
 		{
             *str = ' ';
 		    str++;
@@ -341,30 +338,30 @@ char* spec_decimal(long long int var_len, Flags flags, char *str)
     return str;
 }
 
-int s21_itoa(Flags flags, long long int var_len, size_t size, char *decimal_str, char *str)
+int s21_itoa(Flags flags, long long int var_len, size_t size, char *decimal_str)
 {
-    int i = 0;
+    int i;
+	
     int len = var_len;
     if (var_len < 0) 
         len = -len;         
+        i = 0;
     do {     
         decimal_str[i++] = len % 10 + '0'; 
         } 
     while ((len /= 10) > 0.1); 
 
-	
-	if ((flags.plus == 1) && (var_len >= 0) && (flags.precision < flags.width) && (i < size)) decimal_str[i++] = '+';
-	if ((flags.plus == 1) && (var_len >= 0) && (i == size)) decimal_str[i++] = '+';
-	if ((var_len < 0) && (i == size)) decimal_str[i++] = '-';
-	if ((flags.minus == 1) && (var_len < 0) && (i == size)) decimal_str[i++] = '-';
-	if ((i < size) && (var_len < 0) && ((flags.precision < flags.width) || ((flags.precision < size) && (flags.width < size)))) decimal_str[i++] = '-';
+	if ((flags.plus == 1) && (var_len >= 0) && (flags.precision < flags.width) && ((size_t)i <= size)) decimal_str[i++] = '+';
+	if ((var_len < 0) && ((size_t)i == size)) decimal_str[i++] = '-';
+	if ((flags.minus == 1) && (var_len < 0) && ((size_t)i == size)) decimal_str[i++] = '-';
+	if (((size_t)i < size) && (var_len < 0) && ((flags.precision < flags.width) || (((size_t)flags.precision < size) && ((size_t)flags.width < size)))) decimal_str[i++] = '-';
     return i;
 }
+
 
 char* spec_float(double var_len, Flags flags, char *str)
 {
 	double copy_var = var_len;
-	//printf("%lf\n", var_len);
 
     long int integ, fract;
 	//float fract;
