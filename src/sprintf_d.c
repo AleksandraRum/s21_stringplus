@@ -74,7 +74,7 @@ const char *set_flags(const char* format, Flags* flags) {
 int s21_is_digit(int c) { return (c >= '0' && c <= '9'); }
 int s21_get_number(char *num_buff) {
 	int width = 0;
-	for (int i = 0; i < strlen(num_buff); i++){
+	for (size_t i = 0; i < strlen(num_buff); i++){
 	width *= 10;
 	width += num_buff[i] - '0';
 	}
@@ -271,7 +271,7 @@ char* spec_decimal(long long int var_len, Flags flags, char *str)
 			str++;
 		}
 	}
-	
+
     if (((size_t) i < size) && (flags.precision > flags.width))
 	{
 		if (flags.plus == 1)
@@ -361,24 +361,18 @@ int s21_itoa(Flags flags, long long int var_len, size_t size, char *decimal_str)
 
 char* spec_float(double var_len, Flags flags, char *str)
 {
+	char buf[50] = "";
 	double copy_var = var_len;
-
+	if (var_len < 0) copy_var = - var_len;
     long int integ, fract;
-	//float fract;
 	integ = (int) copy_var;
-	double fract1 = copy_var - integ;
-	//float fract2 = fract1;
-	int j = 0;
-	while ((fract1 - (long int) fract1) != 0) 
-	{
-		fract1 *= 10;
-		j++;
-	}
-	fract = (long int) fract1;
-	//printf("%ld\n", fract);
+	int x = 6;
+    if ((flags.precision > 0)) x = flags.precision;
+	double fract1 = roundl((copy_var - integ) * (pow(10, x)));
+	if ((flags.precision == 0) && (flags.is_precision)) fract1 = 0;
+	fract = ((long int) fract1);
 	long int copy_int = integ;
 	long int copy_fr = fract;
-	//printf("%ld\n", fract);
 	size_t size_i = 0;
 	size_t size_fr = 0;
 	while (copy_int > 0.1)
@@ -386,58 +380,81 @@ char* spec_float(double var_len, Flags flags, char *str)
         copy_int /= 10;
         size_i++;
     }
-	//printf("%zu\n", size_i);
 	while (copy_fr > 0.1)
     {
         copy_fr /= 10;
         size_fr++;
     }
-	//printf("%zu\n", size_fr);
 	size_t size = size_fr + size_i;
 	size++;
-	//printf("%zu\n", size);
-    if((size_t)flags.width > size) size = flags.width;
-    if((size_t)flags.precision > 0) size = size_i + 1 + flags.precision;
-	if ((flags.precision == 0) && (flags.is_precision == 0)) size = size_i + 7;
-	if ((flags.precision == 0) && (flags.is_precision == 1)) size = size_i;
-	//printf("%zu\n", size);
+	if ((var_len < 0) || (flags.space) || (flags.plus)) size++;
+	if ((flags.precision == 0) && (flags.is_precision)) size--;
     char *fract_str = malloc(sizeof(char) * size);
-	int i = s21_utoa(flags, fract, integ, size, fract_str, size_i);
-
-	for (int j = i - 1; j >= 0; j--)
-    {
-        *str = fract_str[j];
-        str++;
-    }
-	//printf("%s\n", fract_str);
-	if (fract_str != NULL) free(fract_str);
-	//fract_str = NULL;
-	
+	s21_utoa(flags, fract, integ, fract_str, buf, size_fr, var_len);
+    if (!flags.minus)
+	{
+    while ((size_t)flags.width > size) 
+	{
+		*str = ' ';
+		str++;
+		size++;
+	}
+	}
+	for (size_t i = 0; i < (strlen(buf)); i++)
+	{
+		*str = buf[i];
+		str++;
+	}
+	 if (flags.minus)
+	{
+		while ((size_t)flags.width > size) 
+	{
+		*str = ' ';
+		str++;
+		size++;
+	}
+	}
     return str;
 }
-int s21_utoa(Flags flags, long int fract, long int integ, size_t size, char *fract_str, size_t size_i)
+
+char* s21_utoa(Flags flags, long int fract, long int integ, char *fract_str, char *buf, size_t size_fr, double var_len)
 {
     int i = 0;
     long int copy_int = integ;
 	long int copy_fr = fract;
-	printf("%ld\n", copy_fr);
-    if (integ < 0) 
-        copy_int = -copy_int;     
-	if ((flags.precision > 0) || ((flags.precision == 0) && (flags.is_precision == 0))) {
-		do {     
-        fract_str[i] = copy_fr % 10 + '0'; 
-        i++;
-		printf("%c\n", fract_str[i]);
+	size_t copy_sf = size_fr;
+	if ((flags.is_precision == 0) || (flags.precision > 0))
+	{
+        do {     
+        fract_str[i++] = copy_fr % 10 + '0'; 
         } 
-        while (i < (size - size_i - 1)); 
+        while ((copy_fr /= 10) > 0.1); 
 		fract_str[i++] = '.';
 	}
-		do {     
-        fract_str[i++] = copy_int % 10 + '0'; 
-        } 
-        while ((copy_int /= 10) > 0.1); 
+	do {     
+    fract_str[i++] = copy_int % 10 + '0'; 
+    } 
+    while ((copy_int /= 10) > 0.1); 
 	
-	//printf("%d\n", i);
-	return i;
-
+    if (var_len < 0) {
+		*buf = '-';
+        buf++;
+	}
+	else if ((var_len > 0) && (flags.plus))
+	{
+		*buf = '+';
+        buf++;
+	}
+	else if ((var_len > 0) && (flags.space))
+	{
+		*buf = ' ';
+        buf++;
+	}
+	for (int j = i - 1; j >= 0; j--)
+    {
+        *buf = fract_str[j];
+        buf++;
+    }
+	if (fract_str != NULL) free(fract_str);
+	return buf;
 }
