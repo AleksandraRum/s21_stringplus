@@ -1,5 +1,5 @@
 FLAGS=-Werror -Wextra -Wall
-SOURCE=$(wildcard *.c)
+SOURCE=$(wildcard *.c test/*.c)
 GCOV=-fprofile-arcs -ftest-coverage
 # Ниже настройки сборки файлов для разных систем
 UNAME_S := $(shell uname -s)
@@ -21,7 +21,7 @@ s21_string.a: rm
 	ar rc s21_string.a *.o 
 	
 test: s21_string.a
-	gcc $(FLAGS) test.c s21_string.a -o test $(LCHECK)
+	gcc $(FLAGS) test_main.c tests/*.c s21_string.a -o test $(LCHECK)
 	./test
 
 gcov_report: rm clean

@@ -97,13 +97,18 @@ void *s21_trim(const char *src, const char *trim_chars) {
             i = -1;
           }
         }
-        for (s21_size_t i = 0; i < right - 1; i++) {
-          res[i] = src[i + left];
+        for (s21_size_t i = left; i <= right; i++) {
+          res[i - left] = src[i];
         }
-        res[src_len - right - 1] = '\0';
+        res[right + 1] = '\0';
       }
-    } else {
-      res = s21_trim(src, " \t\n");
+    }else{
+      s21_size_t src_len = strlen(src);
+      res = (char *)malloc(sizeof(char) * (src_len + 1));
+      for(s21_size_t i = 0; i < src_len; i++){
+        res[i] = src[i];
+      }
+      res[src_len] = '\0';
     }
   }
   return res;
