@@ -1,9 +1,7 @@
 #ifndef s21_string
 #define s21_string
 
-#include <dirent.h>
-#include <getopt.h>
-#include <regex.h>
+//#include <dirent.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -152,41 +150,25 @@
 
 char *s21_strerror(int errnum);
 char *s21_strrchr(const char *str, int c);
-
-typedef struct
-{
-	int type;
-	int minus;
-	int zero;
-	int star;
-	int precision;		
-	int is_precision;
-	int plus;
-	int space;
-	int hash;
-	int length;	
-	int width;	
-	int error;
-}Flags;
-
+char *s21_strcat(char *destination, char *addition);
+char *s21_strerror(int errnum);
+char *s21_strrchr(const char *str, int c);
+int* create_delim(const char* delim);
+char* s21_strtok(char* str, const char* delim);
+s21_size_t s21_strspn(const char* str, const char* sym);
+char *s21_strcpy(char *dest, const char *source);
+char *s21_strstr(const char *dest, const char *source);
+char* s21_strncpy( char * dest, const char * source, s21_size_t num );
+int s21_strncmp(const char *str1, const char *str2, s21_size_t num);
+char *s21_strchr(const char *str, int symbol);
+char* s21_strpbrk(const char* str, const char* sym);
+s21_size_t s21_strcspn(const char* str, const char* sym);
+s21_size_t s21_strlen(const char *str);
+char *s21_strncat(char *dest, const char *src, s21_size_t n);
 void *s21_memcpy (void *destination, const void *source, s21_size_t n);
 void *s21_memchr(const void *str, int c, s21_size_t n);
 int s21_memcmp(const void *str1, const void *str2, size_t n);
 void *s21_memset(void *str, int c, size_t n);
-int s21_sprintf(char* str, const char* format, ...);
-char* spec_decimal(long long int var_len, Flags flags, char *str);
-int s21_itoa(Flags flags, long long int var_len, size_t size, char *decimal_str);
-void parsing_func(char* str, const char* format, Flags flags, va_list* args);
-long long int handle_h_l(Flags *flags, va_list* args, const char* format);
-const char *set_flags(const char* format, Flags* flags);
-const char *get_width_accuracy(const char* format, Flags* flags, va_list args);
-const char *set_length(const char* format, Flags* flags);
-char* spec_float(double var_len, Flags flags, char *str);
-char *s21_utoaf(Flags flags, long int fract, long int integ, char *fract_str, char *buf, double var_len, int x);
-char* spec_char(const char c, Flags* flags, char* str);
-void ch2str(const char c, char* str);
-char* space2str(int width, int lenght, int zero_fill, char* str);
-char* spec_string(char* s, Flags* flags, char* str);
 
 #endif
 

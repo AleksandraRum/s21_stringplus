@@ -1,10 +1,8 @@
+
+#if 0
 #include "s21_string.h"
-
-#include <stdio.h>
-#include <string.h>
-
-
-int main() {
+//#include <string.h>
+/*int main() {
     /*char src[] = "HELLO, World!";
     char dst[20] = "";
     if (strcmp(memcpy(dst, src, 6), s21_memcpy(dst, src, 6)) == 0) printf ("OK\n");
@@ -77,4 +75,14 @@ int main() {
     
 return 0;
 }
-
+int main() {
+    char str[20] = "";
+    char str1[20] = "";
+    printf("%d\n", sprintf(str, "Hello %10d", 10123));
+    printf("%d\n", s21_sprintf(str1, "Hello %10d", 10123));
+    printf("%s\n", str);
+    printf("%s\n", str1);
+    
+return 0;
+}
+#endif

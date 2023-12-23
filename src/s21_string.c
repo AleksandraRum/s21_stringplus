@@ -27,7 +27,7 @@ s21_size_t s21_strcspn(const char* str, const char* sym)
 	s21_size_t cnt = 0;
 	for (s21_size_t i = 0; i < s21_strlen(str); i++)
 	{
-		if (strchr(sym, str[i]) == s21_NULL)
+		if (s21_strchr(sym, str[i]) == s21_NULL)
 			cnt++;
 		else
 			break;
@@ -40,7 +40,7 @@ char* s21_strpbrk(const char* str, const char* sym)
 	char* ptr = (char*)str;
 	for (s21_size_t i = 0; i < s21_strlen(str); i++)
 	{
-		if (strchr(sym, ptr[i]) != s21_NULL)
+		if (s21_strchr(sym, ptr[i]) != s21_NULL)
 		{	find = 1;
 			break;
 		}
@@ -129,9 +129,9 @@ char *s21_strcpy(char *dest, const char *source) {
 s21_size_t s21_strspn(const char* str, const char* sym)
 {
 	s21_size_t cnt = 0;
-	for (s21_size_t i = 0; i < strlen(str); i++)
+	for (s21_size_t i = 0; i < s21_strlen(str); i++)
 	{
-		if (strchr(sym, str[i]) != s21_NULL)
+		if (s21_strchr(sym, str[i]) != s21_NULL)
 			cnt++;
 	}
 	return cnt;
@@ -190,4 +190,41 @@ char* s21_strtok(char* str, const char* delim) {
     free(deliDict);
     return str;
 }
+char *s21_strcat(char *destination, char *addition) {
+    int str1_length = s21_strlen(destination);
+    int str2_length = s21_strlen(addition);
+
+    for (int i = 0; i <= str2_length; i++) {
+        destination[str1_length + i] = addition[i];
+    }
+
+    return destination;
+}
+char *s21_strrchr(const char *str, int c) {
+  char *result = s21_NULL;
+  int i = 0;
+  for (; str[i]; i++) {
+    if (str[i] == c) {
+      result = (char *)str + i;
+    }
+  }
+  if (c == '\0') {
+    result = (char *)str + i;
+  }
+  return result;
+}
+char *s21_strerror(int errnum) {
+    char* s_err;
+    char* ERRORS[] = ERR_LIST;
+    if (errnum >= 0 && errnum <= 133){
+        s_err = (char*)ERRORS[errnum];
+    }
+    else {
+        static char buffer[80];
+        s21_sprintf(buffer, "Unknown error %d", errnum);
+        s_err = buffer;
+    }
+    return s_err;
+}
+
 //>>>>>>> src/s21_string.c
