@@ -5,9 +5,8 @@
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <wchar.h>
 
-#include "s21_string.h"
+#include "s21_sprintf.h"
 #include "s21_c#_functions.h"
 
 

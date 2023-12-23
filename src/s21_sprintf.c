@@ -224,7 +224,7 @@ void parsing_func(char* str, const char* format, Flags flags, va_list* args) {
 		} break;
     case '%': 	
 		{
-			str = spec_char('%', flags, str); break; 
+			str = spec_char('%', &flags, str); break; 
 		} break;
     default:		break;
     }

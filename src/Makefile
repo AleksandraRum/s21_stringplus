@@ -1,5 +1,5 @@
 FLAGS=-Werror -Wextra -Wall
-SOURCE=$(wildcard *.c test/*.c)
+SOURCE=$(wildcard *.c tests/*.c)
 GCOV=-fprofile-arcs -ftest-coverage
 # Ниже настройки сборки файлов для разных систем
 UNAME_S := $(shell uname -s)

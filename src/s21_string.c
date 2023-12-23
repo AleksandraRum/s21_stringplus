@@ -1,4 +1,4 @@
-#include "s21_string.h"
+#include "s21_sprintf.h"
 
 char *s21_strncat(char *dest, const char *src, s21_size_t n) {
   unsigned int dest_length = 0;
@@ -142,7 +142,7 @@ int* create_delim(const char* delim) {
     if (d == s21_NULL) {
         return s21_NULL;  // Return s21_NULL if memory could not be allocated
     }
-    memset(d, 0, 256 * sizeof(int));  // Initialize the array with zeros
+    s21_memset(d, 0, 256 * sizeof(int));  // Initialize the array with zeros
 
     s21_size_t i = 0;
     while (delim[i] != '\0') {
