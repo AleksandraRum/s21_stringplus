@@ -1,4 +1,4 @@
-/*#include "../test_main.h"
+#include "../test_main.h"
 
 START_TEST(strcat_1) {
   char s1[30] = "Hello, world!";
@@ -102,4 +102,3 @@ Suite *test_strcat(void) {
   suite_add_tcase(s, tc);
   return s;
 }
-*/

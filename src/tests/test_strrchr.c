@@ -1,4 +1,4 @@
-/*#include "../test_main.h"
+#include "../test_main.h"
 
 START_TEST(strrchr_1) {
   char s[] = "Hello, world!";
@@ -73,4 +73,3 @@ Suite *test_strrchr(void) {
   suite_add_tcase(s, tc);
   return s;
 }
-*/

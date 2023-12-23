@@ -183,7 +183,7 @@ void parsing_func(char* str, const char* format, Flags flags, va_list* args) {
     int var_len;
     switch (*format)
     {
-    case 'd':	
+    case 'd': case 'i':	
 	{
 		if (flags.length == 'l') 
 		{
