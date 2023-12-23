@@ -10,12 +10,12 @@
 
 int s21_sprintf(char* str, const char* format, ...)
 {
-    Flags flags  = {0};
+    //Flags flags  = {0};
     va_list list;
     va_start(list, format);
     char* ptr = str;
-    char specif[18] = "diouxXcsnpfFeEgG%";
-    long long int var_len;
+    //char specif[18] = "diouxXcsnpfFeEgG%";
+    //long long int var_len;
     while (*format)
     {
         if (*format == '%')
@@ -87,14 +87,14 @@ const char *get_width_accuracy(const char* format, Flags* flags, va_list args)
     char num_buff[100] = "";
 	char pres_buff[100] = "";
 	bool was_dot = false;
-	const char* ptr1 = format;
+	//const char* ptr1 = format;
 	int counter = 0;
     if (strchr(format, '.') != NULL) 
 	{
 		was_dot = true;
 		flags->is_precision = 1;
 	}	
-	int dot = (strchr(format, '.')) - ptr1;
+	//int dot = (strchr(format, '.')) - ptr1;
     if (was_dot == true)
 	{
 	    for (size_t i = 0; format[i] != '.'; i++)
@@ -243,8 +243,18 @@ void parsing_func(char* str, const char* format, Flags flags, va_list* args) {
 		{
 			var_len =  va_arg(*args, int);
 		    str = spec_decimal(var_len, flags, str);
-		}
-	} break; 
+		} 
+	} break;
+	case 'c':	
+		{
+			//char var_len =  va_arg(*args, int);
+		    str = spec_char(va_arg(*args, int), &flags, str);
+		} break;
+	case 's':	
+		{
+			//char var_len =  va_arg(*args, int);
+		    str = spec_string(va_arg(*args, char*), &flags, str);
+		} break;	
     case 'f': 	
 	{
 
@@ -353,9 +363,8 @@ int s21_itoa(Flags flags, long long int var_len, size_t size, char *decimal_str)
     int i;
 	
     int len = var_len;
-    if (var_len < 0) 
-        len = -len;         
-        i = 0;
+    if (var_len < 0) {len = -len;}         
+    i = 0;
     do {     
         decimal_str[i++] = len % 10 + '0'; 
         } 
@@ -402,7 +411,7 @@ char* spec_float(double var_len, Flags flags, char *str)
 	
     char *fract_str = malloc(sizeof(char) * (size + 1));
 	//printf("%zu\n",size);
-	s21_utoa(flags, fract, integ, fract_str, buf, size_fr, var_len, x);
+	s21_utoaf(flags, fract, integ, fract_str, buf, var_len, x);
     if (!flags.minus)
 	{
     while ((size_t)flags.width > size) 
@@ -429,12 +438,12 @@ char* spec_float(double var_len, Flags flags, char *str)
     return str;
 }
 
-char* s21_utoa(Flags flags, long int fract, long int integ, char *fract_str, char *buf, size_t size_fr, double var_len, int x)
+char* s21_utoaf(Flags flags, long int fract, long int integ, char *fract_str, char *buf, double var_len, int x)
 {
     int i = 0;
     long int copy_int = integ;
 	long int copy_fr = fract;
-	size_t copy_sf = size_fr;
+	//size_t copy_sf = size_fr;
 	//printf("%zu\n",size);
 	if ((flags.is_precision == 0) || (flags.precision > 0))
 	{
@@ -480,3 +489,70 @@ char* s21_utoa(Flags flags, long int fract, long int integ, char *fract_str, cha
 	//printf("%s\n",fract_str);
 	return buf;
 }
+
+char* spec_char(const char c, Flags* flags, char* str)
+{
+	if (flags->minus == 1) {
+		ch2str(c, str);
+	}
+	str = space2str(flags->width, 1, flags->zero, str);
+
+	if (flags->minus == 0) {
+		ch2str(c, str);
+	}
+	str++;
+	return str;
+}
+
+void ch2str(const char c, char* str) {
+	*str = c;
+	str++;
+}
+char* space2str(int width, int lenght, int zero_fill, char* str) {
+	if ((width - lenght) < 0) {
+		return str;
+	}
+	for (int i = 0; i < (width - lenght); i++) {
+		if (zero_fill == 1) {
+			ch2str('0', str); 
+		}
+		else {
+			 ch2str(' ', str); 
+		}
+		str++;	
+	}
+	return str;
+}
+
+char* spec_string(char* s, Flags* flags, char* str) {
+	char* ptr = str;
+	int length = strlen(s);                   //!!!!!!!!!!!!!!!!!!
+
+	// if (s == NULL) {
+	//	return; 
+	// }
+
+	if (flags->precision != -1) {
+		if (length > flags->precision) {
+			length = flags->precision;
+		}
+	}
+	if (flags->minus == 1) {
+		for (int i = 0; i < length; i++) {
+			str[i] = s[i];
+		}
+		str = str + length;
+		str = space2str(flags->width, length, flags->zero, str);
+	}
+	else {
+		str = space2str(flags->width, length, flags->zero, str);
+		for (int i = 0; i < length; i++) {
+			str[i] = s[i];			
+		}
+		//str = str + length;
+	}
+	if (ptr) ptr = str;
+	return ptr;
+}
+
+
