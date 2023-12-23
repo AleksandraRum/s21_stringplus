@@ -38,12 +38,12 @@ int s21_sprintf(char* str, const char* format, ...);
 char* spec_decimal(long long int var_len, Flags flags, char *str);
 int s21_itoa(Flags flags, long long int var_len, size_t size, char *decimal_str);
 void parsing_func(char* str, const char* format, Flags flags, va_list* args);
-long long int handle_h_l(Flags *flags, va_list* args, const char* format);
+//long long int handle_h_l(Flags *flags, va_list* args, const char* format);
 const char *set_flags(const char* format, Flags* flags);
 const char *get_width_accuracy(const char* format, Flags* flags, va_list args);
 const char *set_length(const char* format, Flags* flags);
 char* spec_float(double var_len, Flags flags, char *str);
-char *s21_utoa(Flags flags, long int fract, long int integ, char *fract_str, char *buf, size_t size_fr, double var_len);
+char *s21_utoa(Flags flags, long int fract, long int integ, char *fract_str, char *buf, size_t size_fr, double var_len, int x);
 
 
 #endif
