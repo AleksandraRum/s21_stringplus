@@ -150,6 +150,7 @@
     "Memory page has hardware error" }; \
 
 char *s21_strerror(int errnum);
+char *s21_strrchr(const char *str, int c);
 
 void *s21_memcpy (void *destination, const void *source, s21_size_t n);
 void *s21_memchr(const void *str, int c, s21_size_t n);
