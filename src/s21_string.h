@@ -43,8 +43,11 @@ const char *set_flags(const char* format, Flags* flags);
 const char *get_width_accuracy(const char* format, Flags* flags, va_list args);
 const char *set_length(const char* format, Flags* flags);
 char* spec_float(double var_len, Flags flags, char *str);
-char *s21_utoa(Flags flags, long int fract, long int integ, char *fract_str, char *buf, size_t size_fr, double var_len, int x);
-
+char *s21_utoaf(Flags flags, long int fract, long int integ, char *fract_str, char *buf, double var_len, int x);
+char* spec_char(const char c, Flags* flags, char* str);
+void ch2str(const char c, char* str);
+char* space2str(int width, int lenght, int zero_fill, char* str);
+char* spec_string(char* s, Flags* flags, char* str);
 
 #endif
 
