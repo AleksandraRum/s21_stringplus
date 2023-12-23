@@ -48,67 +48,63 @@ char* s21_strpbrk(const char* str, const char* sym)
 	}
 	return ( find == 1 ? ptr+pos : s21_NULL);
 }
-char *s21_strchr(const char *str, int symbol) {
-    char *ptr = 0;
-    while (*str != '\0') {
-        if (*str == symbol) {
-            ptr = (char*)str;
-            break;
-        }
-        str++;
-    }
-    if (ptr == s21_NULL)
-        return 0;
-    else
-        return ptr;
-}
-int s21_strncmp(const char *str1, const char *str2, s21_size_t num)
-{ 
-    int i = 0, diff = 0, res = 0; 
-    while (num > 0 && (str1[i] != '\0' || str2[i] != '\0') && diff == 0) { 
-        if (str1[i] != str2[i]) { 
-            res = str1[i] - str2[i]; 
-            break; 
-        } else {
-            diff++; 
-        }
-        i++;
-        num--;
-    } 
-    return res; 
-}
-char* s21_strncpy( char * dest, const char * source, s21_size_t num )	
-{
-	s21_size_t it=0;
-    while (source[it] != '\0' && num >0) {
-        dest[it] = source[it];
-		num--;
-		it++;
-    }
-	for(;it<num;it++)
-	    dest[it] = '\0';
-    return dest;
-}
-char *s21_strstr(const char *dest, const char *source) {
-  char *ptr = s21_NULL;
-  while (*dest != '\0') {
-      char *tmp = (char*)dest;
-      char *tmp2 = (char*)source;
-      while (*tmp == *tmp2) {
-          tmp++;
-          tmp2++;
-          if (*tmp2 == '\0') {
-              ptr = (char*)dest;
-              break;
-          }
-      }
-      dest++;
+char *s21_strchr(const char *str, int c) {
+  char *res = s21_NULL;
+  while ((*str != '\0') && (*str != c)) {
+    str++;
   }
+  if (*str == c) {
+    res = (char *)str;
+  }
+  return res;
+}
 
-  if (ptr == s21_NULL)
-      return 0;
-  else
-      return ptr;
+int s21_strncmp(const char *str1, const char *str2, size_t n) {
+    unsigned char c1, c2;
+    while (n) {
+        c1 = *str1++;
+        c2 = *str2++;
+        if (c1 != c2) return c1 - c2;
+        if (!c1) break;
+        n--;
+    }
+    return 0;
+}
+
+char *s21_strncpy(char *dest, const char *src, s21_size_t n) {
+  s21_size_t i = 0;
+  for (; i < n && src[i] != '\0'; i++) {
+    dest[i] = src[i];
+  }
+  return dest;
+}
+
+char *s21_strstr(const char *dest, const char *src) {
+    char *position = s21_NULL;
+    int err = 0;
+    char *cdest = (char *)dest;
+    if (s21_strlen(src) == 0) {
+        position = cdest;
+    } else {
+        for (int i = 0; i < (int)s21_strlen(cdest); i++) {
+            if (cdest[i] == src[0]) {
+                position = &cdest[i];
+                for (int j = i, k = 0; j < (int)s21_strlen(src) + i; j++, k++) {
+                    if (cdest[j] != src[k]) {
+                        err = 1;
+                    }
+                }
+                if (err == 0) {
+                    break;
+                } else {
+                    position = s21_NULL;
+                    err = 0;
+                    continue;
+                }
+            }
+        }
+    }
+    return position;
 }
 
 
@@ -137,59 +133,32 @@ s21_size_t s21_strspn(const char* str, const char* sym)
 	return cnt;
 }
 
-int* create_delim(const char* delim) {
-    int* d = (int*)malloc(256 * sizeof(int));  // Increased the size of the array to account for all possible characters
-    if (d == s21_NULL) {
-        return s21_NULL;  // Return s21_NULL if memory could not be allocated
-    }
-    s21_memset(d, 0, 256 * sizeof(int));  // Initialize the array with zeros
+char *olds;
+char *s21_strtok(char *str, const char *delim) {
+  char *token = s21_NULL;
+  if (str == s21_NULL) str = olds;
 
-    s21_size_t i = 0;
-    while (delim[i] != '\0') {
-        d[(int)delim[i]] = 1;
-        i++;
-    }
-    return d;
+  /* Scan leading delimiters.  */
+  str += s21_strspn(str, delim);  // handles possible trailing delims
+  if (*str == '\0') {
+    olds = str;
+    return s21_NULL;
+  }
+
+  /* Find the end of the token.  */
+  token = str;
+  str = s21_strpbrk(token, delim);
+  if (str == s21_NULL) {
+    /* This token finishes the string.  */
+    olds = s21_memchr(token, '\0', 1024);
+  } else {
+    /* Terminate the token and make OLDS point past it.  */
+    *str = '\0';
+    olds = str + 1;
+  }
+  return token;
 }
 
-char* s21_strtok(char* str, const char* delim) {
-    static char* last = s21_NULL;
-    static char* strToFree = s21_NULL;
-
-    int* deliDict = create_delim(delim);
-    if (deliDict == s21_NULL) {  // We check whether it was possible to create a separator
-        return s21_NULL;
-    }
-    if (str != s21_NULL) {
-        if (strToFree != s21_NULL) {
-            free(strToFree);
-        }
-        last = (char*)malloc(s21_strlen(str) + 1);
-        if (last == s21_NULL) {
-            free(deliDict);
-            return s21_NULL;
-        }
-        strToFree = last;
-        s21_strcpy(last, str);
-    }
-
-    while (deliDict[(int)*last] && *last != '\0') {
-        last++;
-    }
-    str = last;
-    if (*last == '\0') {
-        free(deliDict);
-        free(strToFree);
-        return s21_NULL;
-    }
-    while (*last != '\0' && !deliDict[(int)*last]) {
-        last++;
-    }
-    *last = '\0';
-    last++;
-    free(deliDict);
-    return str;
-}
 char *s21_strcat(char *destination, char *addition) {
     int str1_length = s21_strlen(destination);
     int str2_length = s21_strlen(addition);
