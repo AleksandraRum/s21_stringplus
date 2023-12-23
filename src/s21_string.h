@@ -9,6 +9,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <math.h>
+//#include <local.h>
 
 #define BUFFER 10000
 #define s21_size_t unsigned long long
@@ -48,6 +49,10 @@ char* spec_char(const char c, Flags* flags, char* str);
 void ch2str(const char c, char* str);
 char* space2str(int width, int lenght, int zero_fill, char* str);
 char* spec_string(char* s, Flags* flags, char* str);
+char* spec_pointer(void* pointer, Flags* flags, char* str);
+int get_len_num(int num);
+char* s21_utoa(unsigned int n, int len);
+char* spec_unsign(uint64_t un, Flags* flags, char* str);
 
 #endif
 

@@ -51,8 +51,8 @@ int main() {
     else printf("Not OK\n");*/
 
 
-    char str[20] = "";
-    char str1[20] = "";
+    char str[50] = "";
+    char str1[50] = "";
     /*printf("%d\n", sprintf(str, "Hello %+d", 148));
     //s21_sprintf(str1, "Hello % -6d", 148);
     printf("%d\n", s21_sprintf(str1, "Hello %+d", 148));
@@ -70,8 +70,11 @@ int main() {
     printf("%d\n", s21_sprintf(str1, "Hello %d", -148148));
     printf("%s\n", str);
     printf("%s\n", str1);*/
-    printf("%d\n", sprintf(str, "Hello %10d", 10123));
-    printf("%d\n", s21_sprintf(str1, "Hello %10d", 10123));
+   // u_int64_t a = 4294967295+2;
+    int a = 2;
+    int *b = &a;
+    printf("%d\n", sprintf(str, "Hello %p", b));
+    printf("%d\n", s21_sprintf(str1, "Hello %p", b));
     printf("%s\n", str);
     printf("%s\n", str1);
     

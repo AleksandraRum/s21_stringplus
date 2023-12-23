@@ -52,3 +52,14 @@ void *s21_memset(void *str, int c, size_t n)
     }
     return str;
 }
+
+char *s21_strcat(char *destination, char *addition) {
+    int str1_length = s21_strlen(destination);
+    int str2_length = s21_strlen(addition);
+
+    for (int i = 0; i <= str2_length; i++) {
+        destination[str1_length + i] = addition[i];
+    }
+
+    return destination;
+}
