@@ -190,4 +190,4 @@ char* s21_strtok(char* str, const char* delim) {
     free(deliDict);
     return str;
 }
->>>>>>> src/s21_string.c
+//>>>>>>> src/s21_string.c

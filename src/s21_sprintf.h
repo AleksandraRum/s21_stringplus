@@ -1,4 +1,4 @@
-#ifndef s21_sprintf
+/*#ifndef s21_sprintf
 #define s21_sprintf
 
 #include <stdarg.h>
@@ -13,4 +13,4 @@ typedef struct
 
 int s21_sprintf(char* str, const char* format, ...);
 
-#endif
+#endif*/
