@@ -1,10 +1,10 @@
-#include <s21_sprintf.h>
+/*#include <s21_sprintf.h>
 
-/*
+
 	пример: 
 	sprintf(str, "Hello %*.d %s", 256, world);
 	"Hello %*.d %s" - форматная строка
-*/
+
 int s21_sprintf(char* str, const char* format, ...) {
 
 	Flags f{ };	// Зануляем структуру
@@ -34,4 +34,4 @@ int s21_sprintf(char* str, const char* format, ...) {
 	*str = '\0';
 	va_end(list);
 	return (str-ptr);	// Вернуть кол-во символов? записанных в строке
-}
+}*/

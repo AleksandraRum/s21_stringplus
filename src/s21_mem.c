@@ -1,6 +1,6 @@
 #include "s21_string.h"
 
-void *s21_memcpy(void *dest, const void *src, s21_size_t n) {
+/*void *s21_memcpy(void *dest, const void *src, s21_size_t n) {
   char *d = dest;
   const char *s = src;
   for (int i = 0; i < n; i++) {
@@ -8,7 +8,7 @@ void *s21_memcpy(void *dest, const void *src, s21_size_t n) {
   }
   return dest;
 }
-
+*/
 void *s21_memchr(const void *str, int c, s21_size_t n) {
   char *res = s21_NULL;
   const char *arr = str;
