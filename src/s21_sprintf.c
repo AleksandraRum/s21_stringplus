@@ -23,7 +23,7 @@ int s21_sprintf(char* str, const char* format, ...)
             format = get_width_accuracy(format, &flags, list);  
 			format = set_length(format, &flags);
 			parsing_func(str, format, flags, &list);
-            str = str + strlen(str);
+            str = str + s21_strlen(str);
 		}
         else	
 		{
@@ -68,7 +68,7 @@ int s21_is_digit(int c)
 }
 int s21_get_number(char *num_buff) {
 	int width = 0;
-	for (size_t i = 0; i < strlen(num_buff); i++){
+	for (size_t i = 0; i < s21_strlen(num_buff); i++){
 	width *= 10;
 	width += num_buff[i] - '0';
 	}
@@ -81,7 +81,7 @@ const char *get_width_accuracy(const char* format, Flags* flags, va_list args)
 	bool was_dot = false;
 	int x = 0;
 	int counter = 0;
-    if (strchr(format, '.') != NULL) 
+    if (s21_strchr(format, '.') != NULL) 
 	{
 		was_dot = true;
 		flags->is_precision = 1;
@@ -96,7 +96,7 @@ const char *get_width_accuracy(const char* format, Flags* flags, va_list args)
 			if (s21_is_digit(format[i])) {
 					char buf[2] = "";
 					buf[0] = format[i];
-					strcat(num_buff, buf);
+					s21_strcat(num_buff, buf);
 					flags->width = s21_get_number(num_buff);
             }
             else if (format[i] == '*'){
@@ -117,7 +117,7 @@ const char *get_width_accuracy(const char* format, Flags* flags, va_list args)
 		if (s21_is_digit(format[i])) {
 			char buf[2] = "";
 			buf[0] = format[i];
-			strcat(pres_buff, buf);
+			s21_strcat(pres_buff, buf);
 			flags->precision = s21_get_number(pres_buff);
         }	
         if (format[i] == '*'){
@@ -133,7 +133,7 @@ const char *get_width_accuracy(const char* format, Flags* flags, va_list args)
 			if (s21_is_digit(format[i])) {
 				char buf[2] = "";
 				buf[0] = format[i];
-				strcat(num_buff, buf);
+				s21_strcat(num_buff, buf);
 				flags->width = s21_get_number(num_buff);   
             }
 				
@@ -520,7 +520,7 @@ char* spec_pointer(void* pointer, Flags* flags, char* str)
   num /= 16;
  } while (num != 0);
     
- int pointer_len = (int)strlen(ptr);
+ int pointer_len = (int)s21_strlen(ptr);
  if (pointer_len < flags->width && flags->minus == 0) {
   str = space2str(flags->width, pointer_len, flags->zero, str);
  }

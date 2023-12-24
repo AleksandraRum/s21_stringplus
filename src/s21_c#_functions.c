@@ -68,8 +68,8 @@ void *s21_trim(const char *src, const char *trim_chars) {
   char *res = s21_NULL;
   if (src != s21_NULL) {
     if (trim_chars != s21_NULL && *trim_chars) {
-      s21_size_t src_len = strlen(src);
-      s21_size_t trim_len = strlen(trim_chars);
+      s21_size_t src_len = s21_strlen(src);
+      s21_size_t trim_len = s21_strlen(trim_chars);
       res = (char *)malloc(sizeof(char) * (src_len + 1));
       if (res) {
         s21_size_t left = 0, right = 0;
@@ -103,7 +103,7 @@ void *s21_trim(const char *src, const char *trim_chars) {
         res[right + 1] = '\0';
       }
     }else{
-      s21_size_t src_len = strlen(src);
+      s21_size_t src_len = s21_strlen(src);
       res = (char *)malloc(sizeof(char) * (src_len + 1));
       for(s21_size_t i = 0; i < src_len; i++){
         res[i] = src[i];
