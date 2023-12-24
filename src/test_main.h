@@ -31,8 +31,6 @@ Suite *test_strtok(void);
 
 Suite *test_sprintf_c(void);
 Suite *test_sprintf_f(void);
-
-Suite *test_sprintf(void);
 Suite *test_sprintf_signed(void);
 Suite *test_sprintf_signed_i(void);
 Suite *test_sprintf_unsigned(void);
