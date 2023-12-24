@@ -1,5 +1,5 @@
 #include "s21_sprintf.h"
-
+#include <string.h>
 char *s21_strncat(char *dest, const char *src, s21_size_t n) {
   unsigned int dest_length = 0;
   unsigned int src_length = 0;
@@ -122,37 +122,33 @@ char *s21_strcpy(char *dest, const char *source) {
     return ptr;
 }
 
-s21_size_t s21_strspn(const char* str, const char* sym)
-{
-	s21_size_t cnt = 0;
-	for (s21_size_t i = 0; i < s21_strlen(str); i++)
-	{
-		if (s21_strchr(sym, str[i]) != s21_NULL)
-			cnt++;
-	}
-	return cnt;
+
+s21_size_t s21_strspn(const char *str, const char *sym) {
+    s21_size_t cnt = 0;
+    while (*str && sym!= s21_NULL && s21_strchr(sym, *str++)) {
+        cnt++;
+    }
+    return cnt;
 }
+
 
 char *olds;
 char *s21_strtok(char *str, const char *delim) {
   char *token = s21_NULL;
   if (str == s21_NULL) str = olds;
 
-  /* Scan leading delimiters.  */
   str += s21_strspn(str, delim);  // handles possible trailing delims
   if (*str == '\0') {
     olds = str;
     return s21_NULL;
   }
 
-  /* Find the end of the token.  */
+  
   token = str;
   str = s21_strpbrk(token, delim);
   if (str == s21_NULL) {
-    /* This token finishes the string.  */
     olds = s21_memchr(token, '\0', 1024);
   } else {
-    /* Terminate the token and make OLDS point past it.  */
     *str = '\0';
     olds = str + 1;
   }
@@ -190,7 +186,7 @@ char *s21_strerror(int errnum) {
     }
     else {
         static char buffer[80];
-        s21_sprintf(buffer, "Unknown error %d", errnum);
+        s21_sprintf(buffer, "Unknown error: %d", errnum);
         s_err = buffer;
     }
     return s_err;
