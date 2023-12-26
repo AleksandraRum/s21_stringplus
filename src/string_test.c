@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
 
 
 int main() {
@@ -70,11 +71,14 @@ int main() {
     printf("%d\n", s21_sprintf(str1, "Hello %d", -148148));
     printf("%s\n", str);
     printf("%s\n", str1);*/
-    printf("%d\n", sprintf(str, "Hello %10d", 10123));
-    printf("%d\n", s21_sprintf(str1, "Hello %10d", 10123));
+    printf("%d\n", sprintf(str, "Hello %dl", 25));
+    printf("%d\n", s21_sprintf(str1, "Hello %ld", 25));
     printf("%s\n", str);
     printf("%s\n", str1);
-    
+    /*printf("%d\n", sprintf(str, "Hello %-.3f", 1.23));
+    printf("%d\n", s21_sprintf(str1, "Hello %-.3f", 1.23));
+    printf("%s\n", str);
+    printf("%s\n", str1);*/
 return 0;
 }
 

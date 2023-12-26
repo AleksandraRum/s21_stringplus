@@ -48,6 +48,12 @@ char* spec_char(const char c, Flags* flags, char* str);
 void ch2str(const char c, char* str);
 char* space2str(int width, int lenght, int zero_fill, char* str);
 char* spec_string(char* s, Flags* flags, char* str);
+char* spec_unsign(uint64_t un, Flags* flags, char* str);
+char* s21_utoa(unsigned int n, int len);
+int get_len_num(int num);
+char* spec_pointer(void* pointer, Flags* flags, char* str);
+int s21_is_digit(int c); 
+
 
 #endif
 
