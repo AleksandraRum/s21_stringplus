@@ -217,7 +217,7 @@ char* spec_decimal(long long int var_len, Flags flags, char* str) {
   }
   if ((s21_size_t)flags.width > size) size = flags.width;
   if ((s21_size_t)flags.precision > size) size = flags.precision;
-  char* decimal_str = malloc(sizeof(char) * (size + 1));
+  char* decimal_str = malloc(sizeof(char) * (size + 2));
   int i = s21_itoa(flags, var_len, size, decimal_str);
   char c = ' ';
   if (flags.precision >= flags.width) c = '0';

@@ -152,7 +152,7 @@
 
 #if defined (__APPLE__) || defined(__MACH__)
 #define std 1
-#define N 107
+#define N 106
 #define ERR_LIST { \
     "Undefined error: 0", \
     "Operation not permitted", \
