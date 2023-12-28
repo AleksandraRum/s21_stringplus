@@ -206,22 +206,11 @@ void parsing_func(char* str, const char* format, Flags flags, va_list* args) {
   }
 }
 
-char* spec_decimal(long long int var_len, Flags flags, char* str) {
-  char* ptr = str;
-  s21_size_t size = 0;
-  int var = var_len;
-  if (var_len < 0) var = -var_len;
-  while (var > 0) {
-    var /= 10;
-    size++;
-  }
-  if ((s21_size_t)flags.width > size) size = flags.width;
-  if ((s21_size_t)flags.precision > size) size = flags.precision;
-  char* decimal_str = malloc(sizeof(char) * (size + 2));
-  int i = s21_itoa(flags, var_len, size, decimal_str);
+char* befor_dec(Flags flags, char* str, int i, size_t size, long long int var_len)
+{
   char c = ' ';
   if (flags.precision >= flags.width) c = '0';
-  if (((s21_size_t)i == size) && (flags.space == 1) && (var_len > 0)) {
+  if (((s21_size_t)i == size) && (flags.space == 1) && (var_len >= 0)) {
     *str = ' ';
     str++;
   }
@@ -247,12 +236,12 @@ char* spec_decimal(long long int var_len, Flags flags, char* str) {
       *str = '-';
       str++;
     }
-    for (s21_size_t k = 0; k < (size - (s21_size_t)i); k++) {
+    for (size_t k = 0; k < (size - (s21_size_t)i); k++) {
       *str = c;
       str++;
     }
   }
-  if (((s21_size_t)i < size) && (flags.precision < flags.width)) {
+  if (((size_t)i < size) && (flags.precision < flags.width)) {
     if (i < flags.precision) {
       int x = flags.width - flags.precision;
       int y = flags.precision - i;
@@ -277,19 +266,39 @@ char* spec_decimal(long long int var_len, Flags flags, char* str) {
     } else if ((flags.minus == 1) && (flags.space == 1) && (var_len >= 0)) {
       *str = ' ';
       str++;
-    } else {
-      for (s21_size_t k = 0; k < (size - (s21_size_t)i); k++) {
+    } 
+	else if (flags.minus != 1) {
+      for (size_t k = 0; k < (size - (s21_size_t)i); k++) {
         *str = c;
         str++;
       }
     }
   }
+  return str;
+}
+
+char* spec_decimal(long long int var_len, Flags flags, char* str) {
+  char buf[100] = "";
+  char* ptr = str;
+  size_t size = 0;
+  int var = var_len;
+  if (var_len < 0) var = -var_len;
+  while (var > 0) {
+    var /= 10;
+    size++;
+  }
+  if (var_len == 0) size = 1;
+  if ((s21_size_t)flags.width > size) size = flags.width;
+  if ((s21_size_t)flags.precision > size) size = flags.precision;
+  char* decimal_str = malloc(sizeof(char) * (size + 1));
+  decimal_str[size] = '\0';
+  int i = s21_itoa(flags, var_len, size, decimal_str, buf);
+  str = befor_dec(flags, str, i, size, var_len);
   if ((flags.is_precision == 1) && (flags.precision == 0) && (var_len == 0)) {
     *str = ' ';
-    str++;
   } else {
     for (int j = i - 1; j >= 0; j--) {
-      *str = decimal_str[j];
+      *str = buf[j];
       str++;
     }
   }
@@ -302,11 +311,12 @@ char* spec_decimal(long long int var_len, Flags flags, char* str) {
   }
   if (decimal_str != NULL) free(decimal_str);
   decimal_str = NULL;
+  *str = '\0';
   return str;
 }
 
 int s21_itoa(Flags flags, long long int var_len, s21_size_t size,
-             char* decimal_str) {
+             char* decimal_str, char *buf) {
   int i;
 
   int len = var_len;
@@ -318,17 +328,21 @@ int s21_itoa(Flags flags, long long int var_len, s21_size_t size,
   do {
     decimal_str[i++] = len % 10 + '0';
   } while ((len /= 10) > 0.1);
-
+  for (int j = 0; j <= i; j++)
+  {
+    buf[j] = decimal_str[j];
+  }
   if ((flags.plus == 1) && (var_len >= 0) &&
       (((flags.precision < flags.width) && ((s21_size_t)i < size)) ||
        ((s21_size_t)i == size)))
-    decimal_str[i++] = '+';
-  if ((var_len < 0) && ((s21_size_t)i == size)) decimal_str[i++] = '-';
+    buf[i++] = '+';
+  if ((var_len < 0) && ((s21_size_t)i == size)) buf[i++] = '-';
   if ((flags.minus == 1) && (var_len < 0) && ((s21_size_t)i == size))
-    decimal_str[i++] = '-';
+    buf[i++] = '-';
   if (((s21_size_t)i < size) && (var_len < 0) && ((int)flags.precision < i) &&
       ((int)flags.width > i))
-    decimal_str[i++] = '-';
+    buf[i++] = '-';
+    buf[i] = '\0';
   return i;
 }
 
@@ -364,7 +378,7 @@ char* spec_float(double var_len, Flags flags, char* str) {
   if ((flags.precision == 0) && (flags.is_precision)) size--;
 
   char* fract_str = malloc(sizeof(char) * (size + 1));
-
+  fract_str[size] = '\0';
   s21_utoaf(flags, fract, integ, fract_str, buf, var_len, x);
   if (!flags.minus) {
     while ((s21_size_t)flags.width > size) {
@@ -384,6 +398,7 @@ char* spec_float(double var_len, Flags flags, char* str) {
       size++;
     }
   }
+  *str = '\0';
   return str;
 }
 
@@ -405,7 +420,7 @@ char* s21_utoaf(Flags flags, long int fract, long int integ, char* fract_str,
   do {
     fract_str[i++] = copy_int % 10 + '0';
   } while ((copy_int /= 10) > 0.1);
-
+  buf[i] = '\0';
   if (var_len < 0) {
     *buf = '-';
     buf++;

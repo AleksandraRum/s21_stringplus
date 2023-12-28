@@ -27,7 +27,7 @@ typedef struct
 
 int s21_sprintf(char* str, const char* format, ...);
 char* spec_decimal(long long int var_len, Flags flags, char *str);
-int s21_itoa(Flags flags, long long int var_len, s21_size_t size, char *decimal_str);
+int s21_itoa(Flags flags, long long int var_len, s21_size_t size, char *decimal_str,char *buf);
 void parsing_func(char* str, const char* format, Flags flags, va_list* args);
 const char *set_flags(const char* format, Flags* flags);
 const char *get_width_accuracy(const char* format, Flags* flags, va_list args);
