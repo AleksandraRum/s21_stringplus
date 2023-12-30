@@ -341,7 +341,7 @@ int s21_itoa(Flags flags, long long int var_len, s21_size_t size,
     buf[i++] = '-';
   if (((s21_size_t)i < size) && (var_len < 0) && ((int)flags.precision < i) &&
       ((int)flags.width > i))
-    buf[i++] = '-';
+    {	buf[i++] = '-';		}
     buf[i] = '\0';
   return i;
 }
