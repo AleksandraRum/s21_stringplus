@@ -12,7 +12,7 @@ int s21_sprintf(char* str, const char* format, ...) {
       Flags flags = {0};
       format++;
       while ((*format == '+' || *format == '-' || *format == ' ' ||
-              *format == '#')) {
+              *format == '0')) {
         format = set_flags(format, &flags);
         format++;
       }

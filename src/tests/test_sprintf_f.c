@@ -230,6 +230,17 @@ START_TEST(sprintf_21_f) {
 }
 END_TEST
 
+START_TEST(sprintf_22_f) {
+  char str1[4096]="";
+  char str2[4096]="";
+
+  ck_assert_int_eq(
+      s21_sprintf(str1, "%f %f %f %f", -999.666, 0.0001, 666.999, -100.001),
+      sprintf(str2, "%f %f %f %f", -999.666, 0.0001, 666.999, -100.001));
+
+  ck_assert_str_eq(str1, str2);
+}
+END_TEST
 
 Suite *test_sprintf_f(void) {
   Suite *s = suite_create("\033[45m-=S21_SPRINTF_F=-\033[0m");
@@ -256,7 +267,7 @@ Suite *test_sprintf_f(void) {
   tcase_add_test(tc, sprintf_19_f);
   tcase_add_test(tc, sprintf_20_f);
   tcase_add_test(tc, sprintf_21_f);
-
+  tcase_add_test(tc, sprintf_22_f);
   suite_add_tcase(s, tc);
   return s;
 }
