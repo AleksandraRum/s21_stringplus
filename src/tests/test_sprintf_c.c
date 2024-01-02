@@ -33,16 +33,16 @@ START_TEST(sprintf_3_c) {
 }
 END_TEST
 
-// START_TEST(sprintf_4_c) {
-//   char str1[100] = "";
-//   char str2[100] = "";
-//   char *str3 = "%+010.5c";
-//   int a = 60;
-//   ck_assert_int_eq(sprintf(str1, str3, a ),
-//                    s21_sprintf(str2, str3, a));
-//   ck_assert_pstr_eq(str1, str2);
-// }
-// END_TEST
+START_TEST(sprintf_4_c) {
+  char str1[100] = "";
+  char str2[100] = "";
+  char *str3 = "%+010.5c";
+  int a = 60;
+  ck_assert_int_eq(sprintf(str1, str3, a ),
+                   s21_sprintf(str2, str3, a));
+  ck_assert_pstr_eq(str1, str2);
+}
+END_TEST
 
 START_TEST(sprintf_5_c) {
   char str1[100] = "";
@@ -105,7 +105,7 @@ Suite *test_sprintf_c(void) {
   tcase_add_test(tc, sprintf_1_c);
   tcase_add_test(tc, sprintf_2_c);
   tcase_add_test(tc, sprintf_3_c);
-  //tcase_add_test(tc, sprintf_4_c);    // seg fault
+  tcase_add_test(tc, sprintf_4_c);    
   tcase_add_test(tc, sprintf_5_c);
   tcase_add_test(tc, sprintf_6_c);
   tcase_add_test(tc, sprintf_7_c);

@@ -38,7 +38,6 @@ char* s21_utoa(uint64_t n, int len);
 int get_len_num(uint64_t num);
 char* spec_pointer(void* pointer, Flags* flags, char* str);
 int s21_is_digit(int c); 
-void reverse_str(char* str);
 
 
 

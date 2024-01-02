@@ -595,7 +595,7 @@ char* spec_pointer(void* pointer, Flags* flags, char* str) {
     str += sizeof("(null)");
   } else {
     unsigned long long num = (unsigned long long)pointer;
-    // if (pointer == NULL)    //  flags->error = 1;
+    // if (pointer == NULL)      flags->error = 1;
     // else    {
     ptr = &buffer[49];
     *ptr = '\0';
@@ -608,10 +608,10 @@ char* spec_pointer(void* pointer, Flags* flags, char* str) {
     pointer_len += 2;
     // if (pointer_len < flags->width && flags->minus == 0) {
     // str = space2str(flags->width, pointer_len, flags->zero, str);
-    //}
+    // }
     // if (pointer_len < flags->width && flags->minus == 1) {
     // str = space2str(flags->width, pointer_len, flags->zero, str);
-    //}
+    // }
     // pointer_len += 2;
     *--ptr = 'x';
     *--ptr = '0';
@@ -630,7 +630,7 @@ char* spec_pointer(void* pointer, Flags* flags, char* str) {
     }
   }
 
-  /*while (ptr[i]) {
+  /* while (ptr[i]) {
   str[i] = ptr[i];
   i++;
  } */
@@ -643,10 +643,10 @@ int get_len_num(uint64_t num) {
   int len = 0;
 
   if (num == 0) len = 1;
-  /*else if (num < 0) {
+  /* else if (num < 0) {
           len++;
           num = -num;
-  }*/
+  } */
   while (num >= 1) {
     len++;
     num /= 10;
