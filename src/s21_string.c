@@ -73,6 +73,7 @@ char *s21_strncpy(char *dest, const char *src, s21_size_t n) {
   for (; i < n && src[i] != '\0'; i++) {
     dest[i] = src[i];
   }
+   dest[i] = '\0';
   return dest;
 }
 
@@ -119,33 +120,31 @@ char *s21_strcpy(char *dest, const char *source) {
 }
 
 s21_size_t s21_strspn(const char *str, const char *sym) {
-  s21_size_t cnt = 0;
-  for (s21_size_t i = 0; i < s21_strlen(str); i++) {
-    if (s21_strchr(sym, str[i]) != s21_NULL) cnt++;
-  }
-  return cnt;
+    s21_size_t cnt = 0;
+    while (*str && sym!= s21_NULL && s21_strchr(sym, *str++)) {
+        cnt++;
+    }
+    return cnt;
 }
+
 
 char *olds;
 char *s21_strtok(char *str, const char *delim) {
   char *token = s21_NULL;
   if (str == s21_NULL) str = olds;
 
-  /* Scan leading delimiters.  */
   str += s21_strspn(str, delim);  // handles possible trailing delims
   if (*str == '\0') {
     olds = str;
     return s21_NULL;
   }
 
-  /* Find the end of the token.  */
+  
   token = str;
   str = s21_strpbrk(token, delim);
   if (str == s21_NULL) {
-    /* This token finishes the string.  */
     olds = s21_memchr(token, '\0', 1024);
   } else {
-    /* Terminate the token and make OLDS point past it.  */
     *str = '\0';
     olds = str + 1;
   }
@@ -175,4 +174,7 @@ char *s21_strrchr(const char *str, int c) {
   }
   return result;
 }
+
+
+
 

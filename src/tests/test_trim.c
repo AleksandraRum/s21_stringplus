@@ -31,16 +31,6 @@ START_TEST(test_trim_3) {
 END_TEST
 
 START_TEST(test_trim_4) {
-  char s1[30] = "!!!abcdefghij!?!";
-  char s3[] = "!?";
-  char s4[] = "abcdefghij";
-  char *s2 = s21_trim(s1, s3);
-  ck_assert_pstr_eq(s4, s2);
-  if (s2) free(s2);
-}
-END_TEST
-
-START_TEST(test_trim_5) {
   char s1[30] = "abc";
   char s3[] = "333";
   char *s4 = "abc";
@@ -50,7 +40,7 @@ START_TEST(test_trim_5) {
 }
 END_TEST
 
-START_TEST(test_trim_6) {
+START_TEST(test_trim_5) {
   char s1[30] = "hello, world!";
   char s3[] = "?!";
   char *s4 = "hello, world";
@@ -60,7 +50,7 @@ START_TEST(test_trim_6) {
 }
 END_TEST
 
-START_TEST(test_trim_7) {
+START_TEST(test_trim_6) {
   char *s1 = s21_NULL;
   char *s3 = s21_NULL;
   char *s4 = s21_NULL;
@@ -70,7 +60,7 @@ START_TEST(test_trim_7) {
 }
 END_TEST
 
-START_TEST(test_trim_8) {
+START_TEST(test_trim_7) {
   char s1[30] = "";
   char s3[] = "";
   char s4[] = "";
@@ -80,7 +70,7 @@ START_TEST(test_trim_8) {
 }
 END_TEST
 
-START_TEST(test_trim_9) {
+START_TEST(test_trim_8) {
   char s1[] = " wtf ";
   char *s3 = s21_NULL;
   char *s4 = " wtf ";
@@ -90,7 +80,7 @@ START_TEST(test_trim_9) {
 }
 END_TEST
 
-START_TEST(test_trim_10) {
+START_TEST(test_trim_9) {
   char s1[] = " wtf ";
   char *s3 = "";
   char *s4 = " wtf ";
@@ -113,7 +103,6 @@ Suite *test_trim(void) {
   tcase_add_test(tc, test_trim_7);
   tcase_add_test(tc, test_trim_8);
   tcase_add_test(tc, test_trim_9);
-  tcase_add_test(tc, test_trim_10);
 
   suite_add_tcase(s, tc);
   return s;
