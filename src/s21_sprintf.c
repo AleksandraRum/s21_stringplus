@@ -19,7 +19,7 @@ int s21_sprintf(char* str, const char* format, ...) {
       format = get_width_accuracy(format, &flags, list);
       format = set_length(format, &flags);
       parsing_func(str, format, flags, &list);
-      str = str + strlen(str);
+      str = str + s21_strlen(str);
     } else {
       *str = *format;
       str++;
@@ -97,7 +97,7 @@ const char* get_width_accuracy(const char* format, Flags* flags, va_list args) {
         if (s21_is_digit(format[i])) {
           char buf[2] = "";
           buf[0] = format[i];
-          strcat(num_buff, buf);
+          s21_strcat(num_buff, buf);
         }
         flags->width = s21_get_number(num_buff);
         counter = i;
@@ -118,7 +118,7 @@ const char* get_width_accuracy(const char* format, Flags* flags, va_list args) {
       if (s21_is_digit(format[i])) {
         char buf[2] = "";
         buf[0] = format[i];
-        strcat(pres_buff, buf);
+        s21_strcat(pres_buff, buf);
       }
       flags->precision = s21_get_number(pres_buff);
       count_1 = i;
@@ -134,7 +134,7 @@ const char* get_width_accuracy(const char* format, Flags* flags, va_list args) {
       if (s21_is_digit(format[i])) {
         char buf[2] = "";
         buf[0] = format[i];
-        strcat(num_buff, buf);
+        s21_strcat(num_buff, buf);
       }
       flags->width = s21_get_number(num_buff);
       counter = i + 1;
@@ -210,7 +210,7 @@ void parsing_func(char* str, const char* format, Flags flags, va_list* args) {
   }
 }
 
-char* befor_dec(Flags flags, char* str, int i, size_t size, long long int var_len)
+char* befor_dec(Flags flags, char* str, int i, s21_size_t size, long long int var_len)
 {
   char c = ' ';
   if (flags.precision >= flags.width) c = '0';
@@ -240,12 +240,12 @@ char* befor_dec(Flags flags, char* str, int i, size_t size, long long int var_le
       *str = '-';
       str++;
     }
-    for (size_t k = 0; k < (size - (s21_size_t)i); k++) {
+    for (s21_size_t k = 0; k < (size - (s21_size_t)i); k++) {
       *str = c;
       str++;
     }
   }
-  if (((size_t)i < size) && (flags.precision < flags.width)) {
+  if (((s21_size_t)i < size) && (flags.precision < flags.width)) {
     if (i < flags.precision) {
       int x = flags.width - flags.precision;
       int y = flags.precision - i;
@@ -272,7 +272,7 @@ char* befor_dec(Flags flags, char* str, int i, size_t size, long long int var_le
       str++;
     } 
 	else if (flags.minus != 1) {
-      for (size_t k = 0; k < (size - (s21_size_t)i); k++) {
+      for (s21_size_t k = 0; k < (size - (s21_size_t)i); k++) {
         *str = c;
         str++;
       }
@@ -284,7 +284,7 @@ char* befor_dec(Flags flags, char* str, int i, size_t size, long long int var_le
 char* spec_decimal(long long int var_len, Flags flags, char* str) {
   char buf[100] = "";
   char* ptr = str;
-  size_t size = 0;
+  s21_size_t size = 0;
   int var = var_len;
   if (var_len < 0) var = -var_len;
   while (var > 0) {
@@ -313,8 +313,8 @@ char* spec_decimal(long long int var_len, Flags flags, char* str) {
       str++;
     }
   }
-  if (decimal_str != NULL) free(decimal_str);
-  decimal_str = NULL;
+  if (decimal_str != s21_NULL) free(decimal_str);
+  decimal_str = s21_NULL;
   *str = '\0';
   return str;
 }
@@ -440,8 +440,8 @@ char* s21_utoaf(Flags flags, long int fract, long int integ, char* fract_str,
     buf++;
   }
 
-  if (fract_str != NULL) free(fract_str);
-  fract_str = NULL;
+  if (fract_str != s21_NULL) free(fract_str);
+  fract_str = s21_NULL;
   return buf; 
 }
 
@@ -483,13 +483,13 @@ char* space2str(int width, int lenght, int zero_fill, char* str) {
 
 char* spec_string(char* s, Flags* flags, char* str) {
   char* ptr = str;
-  if (s == NULL) {
+  if (s == s21_NULL) {
     s21_strcpy(ptr, "(null)");
     ptr += sizeof("(null)");
   }
   else
   {
-        int length = strlen(s);
+        int length = s21_strlen(s);
         int lenForFill = 0;
         if (flags->width < flags->precision && flags->width < length)
             lenForFill = flags->precision;
@@ -550,7 +550,7 @@ char* spec_pointer(void* pointer, Flags* flags, char* str) {
   static char buffer[50];
   char* ptr;
   // int i = 0;
-  if (pointer == NULL) {
+  if (pointer == s21_NULL) {
     s21_strcpy(str, "(null)");
     str += sizeof("(null)");
   } else {
@@ -564,7 +564,7 @@ char* spec_pointer(void* pointer, Flags* flags, char* str) {
       num /= 16;
     } while (num != 0);
 
-    int pointer_len = (int)strlen(ptr);
+    int pointer_len = (int)s21_strlen(ptr);
     pointer_len += 2;
     // if (pointer_len < flags->width && flags->minus == 0) {
     // str = space2str(flags->width, pointer_len, flags->zero, str);
@@ -659,7 +659,7 @@ char* spec_unsign(uint64_t un, Flags* flags, char* str) {
   char* temp2 = (char*)realloc(temp, (lenSp) * sizeof(char));
   str[lenSp] = '\0';
 
-  if (temp2 != NULL) free(temp2);
+  if (temp2 != s21_NULL) free(temp2);
   *str = '\0';
   return str;
 }

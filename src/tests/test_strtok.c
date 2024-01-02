@@ -171,9 +171,9 @@ START_TEST(strtok_17) {
   char s2[] = "ROROROROMA!!!!!!!!!";
   char s3[] = "R";
   strtok(s1, s3);
-  strtok(NULL, s3);
+  strtok(s21_NULL, s3);
   s21_strtok(s2, s3);
-  s21_strtok(NULL, s3);
+  s21_strtok(s21_NULL, s3);
   ck_assert_pstr_eq(s1, s2);
 }
 END_TEST
@@ -183,8 +183,8 @@ START_TEST(strtok_18) {
   char s2[] = "AGONIA";
   char s3[] = "A";
   strtok(s1, s3);
-  strtok(NULL, s3);
-  strtok(NULL, s3);
+  strtok(s21_NULL, s3);
+  strtok(s21_NULL, s3);
   s21_strtok(s2, s3);
   s21_strtok(s21_NULL, s3);
   s21_strtok(s21_NULL, s3);
