@@ -25,7 +25,7 @@ test: s21_string.a
 	./test
 
 gcov_report: rm clean
-	gcc $(FLAGS) test.c $(SOURCE) -o test $(LCHECK) $(GCOV)
+	gcc $(FLAGS) tests/*.c $(SOURCE) -o test $(LCHECK) $(GCOV)
 	./test
 	lcov --capture --directory . --output-file coverage.info
 	genhtml coverage.info -o coverage_html
@@ -36,4 +36,8 @@ rm: clean
 	rm -f test s21_string.a
 
 clean:
+<<<<<<< HEAD
 	rm -rf *.o *.gcda *.gcno *.info coverage_html 
+=======
+	rm -rf *.o *.gcda *.gcno *.info coverage_html 
+>>>>>>> allenemy

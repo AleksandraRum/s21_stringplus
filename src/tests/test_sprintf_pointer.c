@@ -11,8 +11,8 @@ START_TEST(sprintf_1_pointer) {
 END_TEST
 
 START_TEST(sprintf_2_pointer) {
-  char str1[100];
-  char str2[100];
+  char str1[100] = "";
+  char str2[100] = "";
   char* str3 = "%p Te";
   char* val = "0p91ba123f";
 
@@ -23,8 +23,8 @@ START_TEST(sprintf_2_pointer) {
 END_TEST
 
 START_TEST(sprintf_3_pointer) {
-  char str1[100];
-  char str2[100];
+  char str1[100] = "";
+  char str2[100] = "";
   char* str3 = "%p ";
 unsigned short int* val = (void*)22600;
   ck_assert_int_eq(sprintf(str1, str3, val),
@@ -34,8 +34,8 @@ unsigned short int* val = (void*)22600;
 END_TEST
 
 START_TEST(sprintf_4_pointer) {
-  char str1[100];
-  char str2[100];
+  char str1[100] = "";
+  char str2[100] = "";
   char* str3 = "%p Test";
   long int* val = (void*)3088675747373646;
   //long long int* val2 = (void*)33030030303;
@@ -48,8 +48,8 @@ START_TEST(sprintf_4_pointer) {
 END_TEST
 
 START_TEST(sprintf_5_pointer) {
-  char str1[100];
-  char str2[100];
+  char str1[100] = "";
+  char str2[100] = "";
   char* str3 = "%12p";
   char* val = "3015";
   ck_assert_int_eq(sprintf(str1, str3, val),
@@ -59,8 +59,8 @@ START_TEST(sprintf_5_pointer) {
 END_TEST
 
 START_TEST(sprintf_6_pointer) {
-  char str1[200];
-  char str2[200];
+  char str1[200] = "";
+  char str2[200] = "";
   char* str3 = "%6.5p";
   char* val = "3015";
   ck_assert_int_eq(sprintf(str1, str3, val),
@@ -70,8 +70,8 @@ START_TEST(sprintf_6_pointer) {
 END_TEST
 
 START_TEST(sprintf_7_pointer) {
-  char str1[200];
-  char str2[200];
+  char str1[200] = "";
+  char str2[200] = "";
   char* str3 = "%-10.5p Test"; // %-.5p";
   char* val = "3015";
   ck_assert_int_eq(sprintf(str1, str3, val),
@@ -81,8 +81,8 @@ START_TEST(sprintf_7_pointer) {
 END_TEST
 
 START_TEST(sprintf_8_pointer) {
-  char str1[200];
-  char str2[200];
+  char str1[200] = "";
+  char str2[200] = "";
   char* str3 = "%0p Test"; // %0.p Test %0.0p TEST %0p GOD %.p";
   char* val = "3015";
   ck_assert_int_eq(sprintf(str1, str3, val),
@@ -92,8 +92,8 @@ START_TEST(sprintf_8_pointer) {
 END_TEST
 
 START_TEST(sprintf_9_pointer) {
-  char str1[200];
-  char str2[200];
+  char str1[200] = "";
+  char str2[200] = "";
   char* str3 = "%+p Te"; // %+5.7p 
   char* val = "3015";
   ck_assert_int_eq(sprintf(str1, str3, val),
@@ -103,8 +103,8 @@ START_TEST(sprintf_9_pointer) {
 END_TEST
 
 START_TEST(sprintf_10_pointer) {
-  char str1[200];
-  char str2[200];
+  char str1[200] = "";
+  char str2[200] = "";
   char* str3 = "y %5.7p TEST"; // %.p % .p";
   char* val = 0;
   ck_assert_int_eq(
@@ -115,8 +115,8 @@ START_TEST(sprintf_10_pointer) {
 END_TEST
 
 START_TEST(sprintf_11_pointer) {
-  char str1[200];
-  char str2[200];
+  char str1[200] = "";
+  char str2[200] = "";
   char* str3 = "% p t";
   char* val = "8899";
   ck_assert_int_eq(sprintf(str1, str3, val),
@@ -126,8 +126,8 @@ START_TEST(sprintf_11_pointer) {
 END_TEST
 
 START_TEST(sprintf_12_pointer) {
-  char str1[200];
-  char str2[200];
+  char str1[200] = "";
+  char str2[200] = "";
   char* str3 = "poi %+.p";
   char* val = "91918";
   ck_assert_int_eq(sprintf(str1, str3, val),
@@ -137,8 +137,8 @@ START_TEST(sprintf_12_pointer) {
 END_TEST
 
 START_TEST(sprintf_13_pointer) {
-  char str1[200];
-  char str2[200];
+  char str1[200] = "";
+  char str2[200] = "";
   char* str3 = "%06p Te";
   char* val = "32";
   ck_assert_int_eq(sprintf(str1, str3, val),

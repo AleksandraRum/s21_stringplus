@@ -17,6 +17,7 @@ char *s21_strncat(char *dest, const char *src, s21_size_t n) {
 s21_size_t s21_strlen(const char *str) {
   s21_size_t i = 0, res = 0;
   while (str[i] != '\0') {
+<<<<<<< HEAD
       res++;
       i++;
   }
@@ -47,6 +48,34 @@ char* s21_strpbrk(const char* str, const char* sym)
 		pos++;
 	}
 	return ( find == 1 ? ptr+pos : s21_NULL);
+=======
+    res++;
+    i++;
+  }
+  return res;
+}
+s21_size_t s21_strcspn(const char *str, const char *sym) {
+  s21_size_t cnt = 0;
+  for (s21_size_t i = 0; i < s21_strlen(str); i++) {
+    if (s21_strchr(sym, str[i]) == s21_NULL)
+      cnt++;
+    else
+      break;
+  }
+  return cnt;
+}
+char *s21_strpbrk(const char *str, const char *sym) {
+  s21_size_t pos = 0, find = 0;
+  char *ptr = (char *)str;
+  for (s21_size_t i = 0; i < s21_strlen(str); i++) {
+    if (s21_strchr(sym, ptr[i]) != s21_NULL) {
+      find = 1;
+      break;
+    }
+    pos++;
+  }
+  return (find == 1 ? ptr + pos : s21_NULL);
+>>>>>>> allenemy
 }
 char *s21_strchr(const char *str, int c) {
   char *res = s21_NULL;
@@ -60,6 +89,7 @@ char *s21_strchr(const char *str, int c) {
 }
 
 int s21_strncmp(const char *str1, const char *str2, size_t n) {
+<<<<<<< HEAD
     unsigned char c1, c2;
     while (n) {
         c1 = *str1++;
@@ -69,6 +99,17 @@ int s21_strncmp(const char *str1, const char *str2, size_t n) {
         n--;
     }
     return 0;
+=======
+  unsigned char c1, c2;
+  while (n) {
+    c1 = *str1++;
+    c2 = *str2++;
+    if (c1 != c2) return c1 - c2;
+    if (!c1) break;
+    n--;
+  }
+  return 0;
+>>>>>>> allenemy
 }
 
 char *s21_strncpy(char *dest, const char *src, s21_size_t n) {
@@ -80,6 +121,7 @@ char *s21_strncpy(char *dest, const char *src, s21_size_t n) {
 }
 
 char *s21_strstr(const char *dest, const char *src) {
+<<<<<<< HEAD
     char *position = s21_NULL;
     int err = 0;
     char *cdest = (char *)dest;
@@ -131,6 +173,55 @@ s21_size_t s21_strspn(const char* str, const char* sym)
 			cnt++;
 	}
 	return cnt;
+=======
+  char *position = s21_NULL;
+  int err = 0;
+  char *cdest = (char *)dest;
+  if (s21_strlen(src) == 0) {
+    position = cdest;
+  } else {
+    for (int i = 0; i < (int)s21_strlen(cdest); i++) {
+      if (cdest[i] == src[0]) {
+        position = &cdest[i];
+        for (int j = i, k = 0; j < (int)s21_strlen(src) + i; j++, k++) {
+          if (cdest[j] != src[k]) {
+            err = 1;
+          }
+        }
+        if (err == 0) {
+          break;
+        } else {
+          position = s21_NULL;
+          err = 0;
+          continue;
+        }
+      }
+    }
+  }
+  return position;
+}
+
+char *s21_strcpy(char *dest, const char *source) {
+  if (dest == s21_NULL) {
+    return s21_NULL;
+  }
+  char *ptr = dest;
+  while (*source != '\0') {
+    *dest = *source;
+    dest++;
+    source++;
+  }
+  *dest = '\0';
+  return ptr;
+}
+
+s21_size_t s21_strspn(const char *str, const char *sym) {
+  s21_size_t cnt = 0;
+  for (s21_size_t i = 0; i < s21_strlen(str); i++) {
+    if (s21_strchr(sym, str[i]) != s21_NULL) cnt++;
+  }
+  return cnt;
+>>>>>>> allenemy
 }
 
 char *olds;
@@ -160,6 +251,7 @@ char *s21_strtok(char *str, const char *delim) {
 }
 
 char *s21_strcat(char *destination, char *addition) {
+<<<<<<< HEAD
     int str1_length = s21_strlen(destination);
     int str2_length = s21_strlen(addition);
 
@@ -168,6 +260,16 @@ char *s21_strcat(char *destination, char *addition) {
     }
 
     return destination;
+=======
+  int str1_length = s21_strlen(destination);
+  int str2_length = s21_strlen(addition);
+
+  for (int i = 0; i <= str2_length; i++) {
+    destination[str1_length + i] = addition[i];
+  }
+
+  return destination;
+>>>>>>> allenemy
 }
 char *s21_strrchr(const char *str, int c) {
   char *result = s21_NULL;
@@ -182,6 +284,7 @@ char *s21_strrchr(const char *str, int c) {
   }
   return result;
 }
+<<<<<<< HEAD
 char *s21_strerror(int errnum) {
     char* s_err;
     char* ERRORS[] = ERR_LIST;
@@ -197,3 +300,38 @@ char *s21_strerror(int errnum) {
 }
 
 //>>>>>>> src/s21_string.c
+=======
+/*char *s21_strerror(int errnum) {
+  char *s_err;
+  char *ERRORS[] = ERR_LIST;
+  if (errnum >= 0 && errnum <= 133) {
+    s_err = (char *)ERRORS[errnum];
+  } else {
+    static char buffer[80];
+    s21_sprintf(buffer, "Unknown error %d", errnum);
+    s_err = buffer;
+  }
+  return s_err;
+}*/
+
+//>>>>>>> src/s21_string.c
+
+char *s21_strerror(int errnum) {
+    char* ERRORS[] = ERR_LIST;
+    char* s_err = "";
+    if (errnum >= 0 && errnum <= N){
+        s_err = (char*)ERRORS[errnum];
+    }
+    else {
+        static char buffer[80] = "";
+        if (std == 0) {
+            s21_sprintf(buffer, "Unknown error %d", errnum);
+            s_err = buffer;
+        } else if (std == 1) {
+            s21_sprintf(buffer, "Unknown error: %d", errnum);
+            s_err = buffer;
+        }
+    }
+    return s_err;
+}
+>>>>>>> allenemy

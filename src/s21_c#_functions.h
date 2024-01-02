@@ -1,6 +1,5 @@
 #ifndef S21_C_SHARP_FUNC
 #define S21_C_SHARP_FUNC
-//#include <stdlib.h>
 
 #include "s21_string.h"
 

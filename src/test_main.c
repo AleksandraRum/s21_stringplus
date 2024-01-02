@@ -27,7 +27,7 @@ int main(void) {
                               test_sprintf_unsigned(),
                               test_sprintf_pointer(),
                               test_sprintf_signed(),
-                              test_sprintf_signed_i(),                            
+                              test_sprintf_signed_i(),
                               test_to_upper(),
                               test_to_lower(),
                               test_insert(),

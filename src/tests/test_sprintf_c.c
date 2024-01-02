@@ -1,8 +1,8 @@
 #include "../test_main.h"
 
 START_TEST(sprintf_1_c) {
-  char str1[100];
-  char str2[100];
+  char str1[100] = "";
+  char str2[100] = "";
   char *str3 = "%c Test";
   int a = 9;
   ck_assert_int_eq(sprintf(str1, str3, a),
@@ -12,8 +12,8 @@ START_TEST(sprintf_1_c) {
 END_TEST
 
 START_TEST(sprintf_2_c) {
-  char str1[100];
-  char str2[100];
+  char str1[100] = "";
+  char str2[100] = "";
   char *str3 = "%05c Test";
   int a = -6;
   ck_assert_int_eq(sprintf(str1, str3, a),
@@ -23,8 +23,8 @@ START_TEST(sprintf_2_c) {
 END_TEST
 
 START_TEST(sprintf_3_c) {
-  char str1[100];
-  char str2[100];
+  char str1[100] = "";
+  char str2[100] = "";
   char *str3 = "Hi % -10c";
   int c = 1744;
   ck_assert_int_eq(sprintf(str1, str3, c ),
@@ -34,8 +34,8 @@ START_TEST(sprintf_3_c) {
 END_TEST
 
 // START_TEST(sprintf_4_c) {
-//   char str1[100];
-//   char str2[100];
+//   char str1[100] = "";
+//   char str2[100] = "";
 //   char *str3 = "%+010.5c";
 //   int a = 60;
 //   ck_assert_int_eq(sprintf(str1, str3, a ),
@@ -45,8 +45,8 @@ END_TEST
 // END_TEST
 
 START_TEST(sprintf_5_c) {
-  char str1[100];
-  char str2[100];
+  char str1[100] = "";
+  char str2[100] = "";
   char *str3 = "%+10.5c";
   char a = 0;
   ck_assert_int_eq(sprintf(str1, str3, a),
@@ -56,8 +56,8 @@ START_TEST(sprintf_5_c) {
 END_TEST
 
 START_TEST(sprintf_6_c) {
-  char str1[100];
-  char str2[100];
+  char str1[100] = "";
+  char str2[100] = "";
   char *str3 = "%6.4c  st";
   unsigned long int b = 70;
   ck_assert_int_eq(sprintf(str1, str3,  b),
@@ -67,8 +67,8 @@ START_TEST(sprintf_6_c) {
 END_TEST
 
 START_TEST(sprintf_7_c) {
-  char str1[100];
-  char str2[100];
+  char str1[100] = "";
+  char str2[100] = "";
   char *str3 = "g %21c";
   int a = 74;
   ck_assert_int_eq(sprintf(str1, str3, a),
@@ -79,8 +79,8 @@ END_TEST
 
 
 START_TEST(sprintf_8_c) {
-  char str1[100];
-  char str2[100];
+  char str1[100] = "";
+  char str2[100] = "";
   char *str3 = "g %c";
   ck_assert_int_eq(sprintf(str1, str3, 'T'),
                    s21_sprintf(str2, str3, 'T'));
@@ -89,8 +89,8 @@ START_TEST(sprintf_8_c) {
 END_TEST 
 
 START_TEST(sprintf_9_c) {
-  char str1[100];
-  char str2[100];
+  char str1[100] = "";
+  char str2[100] = "";
   char *str3 = "g %c";
   ck_assert_int_eq(sprintf(str1, str3, '\0'),
                    s21_sprintf(str2, str3, '\0'));

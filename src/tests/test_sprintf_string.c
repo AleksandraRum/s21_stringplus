@@ -11,8 +11,8 @@ START_TEST(sprintf_1_string) {
 END_TEST
 
 START_TEST(sprintf_2_string) {
-  char str1[100];
-  char str2[100];
+  char str1[100] = "";
+  char str2[100] = "";
   char *str3 = "%17s ";
   char *val = "I'm so tired";
   ck_assert_int_eq(sprintf(str1, str3, val),
@@ -22,8 +22,8 @@ START_TEST(sprintf_2_string) {
 END_TEST
 
 START_TEST(sprintf_3_string) {
-  char str1[100];
-  char str2[100];
+  char str1[100] = "";
+  char str2[100] = "";
   char *str3 = "%s";
   char *val = "Lol";
   ck_assert_int_eq(sprintf(str1, str3, val),
@@ -33,8 +33,8 @@ START_TEST(sprintf_3_string) {
 END_TEST
 
 START_TEST(sprintf_4_string) {
-  char str1[100];
-  char str2[100];
+  char str1[100] = "";
+  char str2[100] = "";
   char *str3 = "% 02.3s"; 
   char *val = "Lol";
   ck_assert_int_eq(sprintf(str1, str3, val),
@@ -44,8 +44,8 @@ START_TEST(sprintf_4_string) {
 END_TEST
 
 START_TEST(sprintf_5_string) {
-  char str1[200];
-  char str2[200];
+  char str1[200] = "";
+  char str2[200] = "";
   char *str3 = "%-10s";
   char *val = "PPAP";
   ck_assert_int_eq(sprintf(str1, str3, val),
@@ -55,8 +55,8 @@ START_TEST(sprintf_5_string) {
 END_TEST
 
 START_TEST(sprintf_6_string) {
-  char str1[200];
-  char str2[200];
+  char str1[200] = "";
+  char str2[200] = "";
   char *str3 = "%6.5s ";// Test %.23s Test %3.s TEST %.s";
   char *val = "PPAP";
   ck_assert_int_eq(sprintf(str1, str3, val),
@@ -66,8 +66,8 @@ START_TEST(sprintf_6_string) {
 END_TEST
 
 START_TEST(sprintf_7_string) {
-  char str1[200];
-  char str2[200];
+  char str1[200] = "";
+  char str2[200] = "";
   char *str3 = "%-10.5s"; // Test %-.8s Test %-7s TEST %-.s";
   char *val = "yu o";
   ck_assert_int_eq(sprintf(str1, str3, val),
@@ -77,8 +77,8 @@ START_TEST(sprintf_7_string) {
 END_TEST
 
 START_TEST(sprintf_8_string) {
-  char str1[200];
-  char str2[200];
+  char str1[200] = "";
+  char str2[200] = "";
   char *str3 = "%0s Test "; // %0.s Test %0.0s TEST %0s GOD %.s";
   char *val = "really";
   ck_assert_int_eq(sprintf(str1, str3, val),
@@ -88,8 +88,8 @@ START_TEST(sprintf_8_string) {
 END_TEST
 
 START_TEST(sprintf_9_string) {
-  char str1[200];
-  char str2[200];
+  char str1[200] = "";
+  char str2[200] = "";
   char *str3 = "%+s"; // Test %+3.s Test %5.7s TEST %10s";
   char *val = "don't";
   ck_assert_int_eq(sprintf(str1, str3, val),
@@ -99,8 +99,8 @@ START_TEST(sprintf_9_string) {
 END_TEST
 
 // START_TEST(sprintf_10_string) {
-//   char str1[200];
-//   char str2[200];
+//   char str1[200] = "";
+//   char str2[200] = "";
 //   char *str3 = "%5.7s T"; 
 //   char *val = NULL;
 //   ck_assert_int_eq(
@@ -111,8 +111,8 @@ END_TEST
 // END_TEST
 
 START_TEST(sprintf_11_string) {
-  char str1[200];
-  char str2[200];
+  char str1[200] = "";
+  char str2[200] = "";
   char *str3 = "% 3.s";
   char *val = "Whlovin";
   ck_assert_int_eq(sprintf(str1, str3, val),
@@ -122,8 +122,8 @@ START_TEST(sprintf_11_string) {
 END_TEST
 
 START_TEST(sprintf_12_string) {
-  char str1[200];
-  char str2[200];
+  char str1[200] = "";
+  char str2[200] = "";
   char *str3 = "%+.s";
   char *val = "WHAT IS THIS";
   ck_assert_int_eq(sprintf(str1, str3, val),
@@ -133,8 +133,8 @@ START_TEST(sprintf_12_string) {
 END_TEST
 
 START_TEST(sprintf_13_string) {
-  char str1[200];
-  char str2[200];
+  char str1[200] = "";
+  char str2[200] = "";
   char *str3 = "%0.0s";
   char *val = "I don't feel so good";
   ck_assert_int_eq(sprintf(str1, str3, val),
@@ -144,8 +144,8 @@ START_TEST(sprintf_13_string) {
 END_TEST
 
 START_TEST(sprintf_14_string) {
-  char str1[200];
-  char str2[200];
+  char str1[200] = "";
+  char str2[200] = "";
   char *str3 = " %05.7s ";
   char *val = "idx";
   ck_assert_int_eq(sprintf(str1, str3, val),
@@ -155,8 +155,8 @@ START_TEST(sprintf_14_string) {
 END_TEST
 
 START_TEST(sprintf_15_string) {
-  char str1[200];
-  char str2[200];
+  char str1[200] = "";
+  char str2[200] = "";
   char *str3 = "% s";
   char *val = "i care anymore, really";
   ck_assert_int_eq(
@@ -167,8 +167,8 @@ START_TEST(sprintf_15_string) {
 END_TEST
 
 START_TEST(sprintf_16_string) {
-  char str1[100];
-  char str2[100];
+  char str1[100] = "";
+  char str2[100] = "";
   char *str3 = "ret %s";
   char *val = "\0";
   ck_assert_int_eq(sprintf(str1, str3, val),

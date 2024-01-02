@@ -102,10 +102,10 @@ void *s21_trim(const char *src, const char *trim_chars) {
         }
         res[right + 1] = '\0';
       }
-    }else{
+    } else {
       s21_size_t src_len = s21_strlen(src);
       res = (char *)malloc(sizeof(char) * (src_len + 1));
-      for(s21_size_t i = 0; i < src_len; i++){
+      for (s21_size_t i = 0; i < src_len; i++) {
         res[i] = src[i];
       }
       res[src_len] = '\0';
