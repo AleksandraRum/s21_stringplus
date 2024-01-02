@@ -28,6 +28,7 @@ int s21_sprintf(char* str, const char* format, ...) {
   }
 
   *str = '\0';
+  
   va_end(list);
   return (str - ptr);
 }
@@ -598,7 +599,7 @@ char* spec_pointer(void* pointer, Flags* flags, char* str) {
   return str;
 }
 
-int get_len_num(uint32_t num) {
+int get_len_num(uint64_t num) {
   int len = 0;
 
   if (num == 0) len = 1;
@@ -612,7 +613,7 @@ int get_len_num(uint32_t num) {
   }
   return len;
 }
-char* s21_utoa(unsigned int n, int len) {
+char* s21_utoa(uint64_t n, int len) {
   char* str = (char*)malloc((len + 1) * sizeof(char));
   // if (str == NULL)
   //	return NULL;
