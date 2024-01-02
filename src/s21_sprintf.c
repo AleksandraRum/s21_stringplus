@@ -33,27 +33,30 @@ int s21_sprintf(char* str, const char* format, ...) {
 }
 
 const char* set_flags(const char* format, Flags* flags) {
+
+  switch (*format) {
+  case '-':
+      flags->minus = 1;
+      break;
+  case '+':
+      flags->plus = 1;
+      break;
+  case ' ' :
   {
-    switch (*format) {
-      case '-':
-        flags->minus = 1;
-        break;
-      case '+':
-        flags->plus = 1;
-        break;
-      case ' ':
-        flags->space = 1;
-        break;
-      case '#':
-        flags->hash = 1;
-        break;
-      case '0':
-        flags->zero = 1;
-        break;
-      default:
-        break;
-    }
+      if(*(format-1)=='%' && (s21_is_digit(*(format+1)) || *(format + 1)=='-' || *(format + 1) == '+'))
+          flags->space = 1;
   }
+      break;
+  case '0':
+  {
+      if(!s21_is_digit(*(format-1)))
+          flags->zero = 1;
+  }
+      break;
+  default:
+      break;
+  }
+    
   if (flags->space && flags->plus) flags->space = 0;
   if (flags->minus && flags->zero) flags->zero = 0;
   return format;
@@ -438,19 +441,23 @@ char* s21_utoaf(Flags flags, long int fract, long int integ, char* fract_str,
 
   if (fract_str != NULL) free(fract_str);
   fract_str = NULL;
-  return buf;
+  return buf; 
 }
 
 char* spec_char(const char c, Flags* flags, char* str) {
   if (flags->minus == 1) {
     ch2str(c, str);
   }
+  if (flags->space)
+    str++;
   str = space2str(flags->width, 1, flags->zero, str);
 
   if (flags->minus == 0) {
-    ch2str(c, str);
+     ch2str(c, str);
   }
-  str++;
+  if (!flags->space )
+        str++;
+  *str = '\0';
   return str;
 }
 
@@ -473,42 +480,67 @@ char* space2str(int width, int lenght, int zero_fill, char* str) {
   return str;
 }
 
-void reverse_str(char* str) {
-  int len = s21_strlen(str);
-  for (int i = 0; i < len / 2; i++) {
-    char temp = str[i];
-    str[i] = str[len - i - 1];
-    str[len - i - 1] = temp;
-  }
-}
 char* spec_string(char* s, Flags* flags, char* str) {
   char* ptr = str;
   if (s == NULL) {
     s21_strcpy(ptr, "(null)");
     ptr += sizeof("(null)");
-  } else {
-    int length = s21_strlen(s);
-
-    if ((s21_size_t)flags->precision > s21_strlen(s)) {
-      flags->precision = s21_strlen(s);
-      length = s21_strlen(s);
-    } else
-      length = flags->precision;
-
-    if (flags->minus == 1) {
-      for (int i = 0; i < length; i++) {
-        str[i] = s[i];
-      }
-      str = str + length;
-      str = space2str(flags->width, length, flags->zero, str);
-    } else {
-      str = space2str(flags->width, length, flags->zero, str);
-      for (int i = 0; i < length; i++) {
-        str[i] = s[i];
-      }
-    }
-    if (ptr) ptr = str;
   }
+  else
+  {
+        int length = strlen(s);
+        int lenForFill = 0;
+        if (flags->width < flags->precision && flags->width < length)
+            lenForFill = flags->precision;
+        else if (flags->width > flags->precision && flags->width > length && flags->precision > length)  //-
+            lenForFill = flags->width;
+        else if (flags->width > flags->precision && flags->precision != 0 && flags->width > length && flags->precision < length) //-
+        {
+            lenForFill = flags->width;
+            length = flags->precision;
+        }
+        else if (flags->width > flags->precision && flags->width < length)  //-
+        {
+            lenForFill = flags->width;
+            length = flags->precision;
+        }
+        else if (flags->width < flags->precision && flags->width > length)	//-
+            lenForFill = flags->width;
+        else if (flags->width == flags->precision && flags->width > length)	//-
+            lenForFill = flags->width;
+        else if (flags->width != 0 && flags->precision != 0 && flags->width == flags->precision && flags->width < length)
+        {
+            lenForFill = flags->precision;
+            length = flags->precision;
+        }
+        else if (flags->width && flags->precision == 0)
+        {
+            lenForFill = flags->width;
+        }
+        else if (flags->width == 0 && flags->precision == 0 && flags->is_precision)
+        {
+            lenForFill = 0;
+            length = 0;
+        }
+
+        if (flags->minus == 1) {
+            for (int i = 0; i < length; i++) {
+                str[i] = s[i];
+            }
+            str = str + length;
+            str = space2str(lenForFill, length, flags->zero, str);
+        }
+        else {
+            str = space2str(lenForFill, length, flags->zero, str);
+            for (int i = 0; i < length; i++) {
+                str[i] = s[i];
+
+            }
+            str = str + length;
+        }
+        if (ptr) ptr = str;
+    }
+    *ptr = '\0';
   return ptr;
 }
 
@@ -553,6 +585,7 @@ char* spec_pointer(void* pointer, Flags* flags, char* str) {
       for (int i = 0; i < pointer_len; i++) {
         str[i] = ptr[i];
       }
+      str += pointer_len;
     }
   }
 
@@ -561,6 +594,7 @@ char* spec_pointer(void* pointer, Flags* flags, char* str) {
   i++;
  } */
   // str = str + pointer_len;
+   *str = '\0';
   return str;
 }
 
@@ -625,6 +659,6 @@ char* spec_unsign(uint64_t un, Flags* flags, char* str) {
   str[lenSp] = '\0';
 
   if (temp2 != NULL) free(temp2);
-
+  *str = '\0';
   return str;
 }
