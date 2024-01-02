@@ -22,13 +22,16 @@ START_TEST(sprintf_2_signed_i) {
 END_TEST
 
 START_TEST(sprintf_3_signed_i) {
-  char str1[100];
-  char str2[100];
   char str1[100] = "";
+  char str2[100] = "";
+  char *str3 = "%hi est";
+  int val = 3015;
   ck_assert_int_eq(sprintf(str1, str3, val),
                    s21_sprintf(str2, str3, val));
+  ck_assert_pstr_eq(str1, str2);
 }
 END_TEST
+
 
 START_TEST(sprintf_4_signed_i) {
   char str1[100] = "";

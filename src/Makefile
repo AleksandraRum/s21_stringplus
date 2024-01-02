@@ -36,8 +36,5 @@ rm: clean
 	rm -f test s21_string.a
 
 clean:
-<<<<<<< HEAD
 	rm -rf *.o *.gcda *.gcno *.info coverage_html 
-=======
-	rm -rf *.o *.gcda *.gcno *.info coverage_html 
->>>>>>> allenemy
+

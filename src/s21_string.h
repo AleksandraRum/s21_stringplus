@@ -10,7 +10,7 @@
 #define s21_size_t unsigned long long
 #define s21_NULL (void *)0
 
-#ifdef (__linux__)
+#if defined (__linux__)
 #define std 0
 #define N 133
 #define ERR_LIST { \
@@ -149,8 +149,6 @@
     "Operation not possible due to RF-kill", \
     "Memory page has hardware error" }; \
 
-<<<<<<< HEAD
-=======
 #endif
 
 #if defined (__APPLE__) || defined(__MACH__)
@@ -268,7 +266,6 @@
 #endif
 
 
->>>>>>> allenemy
 char *s21_strerror(int errnum);
 char *s21_strrchr(const char *str, int c);
 char *s21_strcat(char *destination, char *addition);
@@ -279,7 +276,7 @@ s21_size_t s21_strspn(const char* str, const char* sym);
 char *s21_strcpy(char *dest, const char *source);
 char *s21_strstr(const char *dest, const char *src);
 char *s21_strncpy(char *dest, const char *src, s21_size_t n);
-int s21_strncmp(const char *str1, const char *str2, size_t n);
+int s21_strncmp(const char *str1, const char *str2, s21_size_t n);
 char *s21_strchr(const char *str, int c);
 char* s21_strpbrk(const char* str, const char* sym);
 s21_size_t s21_strcspn(const char* str, const char* sym);
@@ -287,13 +284,8 @@ s21_size_t s21_strlen(const char *str);
 char *s21_strncat(char *dest, const char *src, s21_size_t n);
 void *s21_memcpy (void *destination, const void *source, s21_size_t n);
 void *s21_memchr(const void *str, int c, s21_size_t n);
-<<<<<<< HEAD
-int s21_memcmp(const void *str1, const void *str2, size_t n);
-void *s21_memset(void *str, int c, size_t n);
-=======
 int s21_memcmp(const void *str1, const void *str2, s21_size_t n);
 void *s21_memset(void *str, int c, s21_size_t n);
->>>>>>> allenemy
 
 #endif
 

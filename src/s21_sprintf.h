@@ -1,13 +1,8 @@
-#include "s21_string.h"
-
-#include <dirent.h>
-#include <getopt.h>
-#include <regex.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
 #include <math.h>
+#include "s21_string.h"
 
 typedef struct
 {
