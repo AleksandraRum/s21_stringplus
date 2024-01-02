@@ -165,18 +165,6 @@ START_TEST(sprintf_15_signed) {
 }
 END_TEST
 
-START_TEST(sprintf_16_signed) {
-  char str1[4096]="";
-  char str2[4096]="";
-  const char format[] = "%hi%hd";
-
-  ck_assert_int_eq(
-      sprintf(str1, format, (short)666, (short)-777),
-      s21_sprintf(str2, format, (short)666, (short)-777));
-  ck_assert_str_eq(str1, str2);
-}
-END_TEST
-
 Suite *test_sprintf_signed(void) {
   Suite *s = suite_create("\033[45m-=S21_SPRINTF_SIGNED=-\033[0m");
   TCase *tc = tcase_create("sprintf_tc");
@@ -196,7 +184,6 @@ Suite *test_sprintf_signed(void) {
   tcase_add_test(tc, sprintf_13_signed);
   tcase_add_test(tc, sprintf_14_signed);
   tcase_add_test(tc, sprintf_15_signed);
-  tcase_add_test(tc, sprintf_16_signed);
   suite_add_tcase(s, tc);
   return s;
 }

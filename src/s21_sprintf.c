@@ -214,7 +214,7 @@ char* befor_dec(Flags flags, char* str, int i, s21_size_t size, long long int va
 {
   char c = ' ';
   if (flags.precision >= flags.width) c = '0';
-  if (((s21_size_t)i == size) && (flags.space == 1) && (var_len >= 0)) {
+  if (((s21_size_t)i == size) && (flags.space == 1) && (var_len > 0)) {
     *str = ' ';
     str++;
   }
@@ -267,7 +267,15 @@ char* befor_dec(Flags flags, char* str, int i, s21_size_t size, long long int va
         str++;
         y--;
       }
-    } else if ((flags.minus == 1) && (flags.space == 1) && (var_len >= 0)) {
+    }else if(flags.zero==1)
+    {
+      for(s21_size_t k=0;k<(s21_size_t)(flags.width-i);k++)
+      {
+        *str='0';
+        str++;
+      }
+    }
+    else if ((flags.minus == 1) && (flags.space == 1) && (var_len >= 0)) {
       *str = ' ';
       str++;
     } 
@@ -298,9 +306,15 @@ char* spec_decimal(long long int var_len, Flags flags, char* str) {
   decimal_str[size] = '\0';
   int i = s21_itoa(flags, var_len, size, decimal_str, buf);
   str = befor_dec(flags, str, i, size, var_len);
-  if ((flags.is_precision == 1) && (flags.precision == 0) && (var_len == 0)) {
+
+  if ((flags.is_precision == 1) && (var_len==0) && (flags.width==0)){ // (flags.precision == 0) && (var_len == 0)) {
     *str = ' ';
-  } else {
+  } else if((flags.is_precision==1) && (flags.precision==0) && (var_len==0))
+  {
+    *str=' ';
+    str++;
+  }else
+  {
     for (int j = i - 1; j >= 0; j--) {
       *str = buf[j];
       str++;
@@ -384,9 +398,35 @@ char* spec_float(double var_len, Flags flags, char* str) {
   char* fract_str = malloc(sizeof(char) * (size + 1));
   fract_str[size] = '\0';
   s21_utoaf(flags, fract, integ, fract_str, buf, var_len, x);
-  if (!flags.minus) {
-    while ((s21_size_t)flags.width > size) {
+  if((!flags.minus) && (!flags.zero))
+  {
+    while((s21_size_t)flags.width>size)
+    {
       *str = ' ';
+      str++;
+      size++;
+    }
+  }
+  else if(flags.zero)
+  {
+    if(var_len < 0)
+    {
+      *str='-';
+      str++;
+    }
+    else if(var_len>0 && flags.plus)
+    {
+      *str='+';
+      str++;
+    }
+    else if(var_len>0 && flags.space)
+    {
+      *str =' ';
+      str++;
+    }
+    while((s21_size_t)flags.width>size)
+    {
+      *str='0';
       str++;
       size++;
     }
