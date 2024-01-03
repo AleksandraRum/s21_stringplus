@@ -5,8 +5,7 @@ START_TEST(test_to_upper_1) {
   char *s2 = s21_to_upper(s1);
   char s3[] = "HELLO, WORLD!";
   ck_assert_pstr_eq(s3, s2);
-  if (s2)
-    free(s2);
+  if (s2) free(s2);
 }
 END_TEST
 
@@ -15,8 +14,7 @@ START_TEST(test_to_upper_2) {
   char *s2 = s21_to_upper(s1);
   char s3[] = "\nH\t\\G123123";
   ck_assert_pstr_eq(s3, s2);
-  if (s2)
-    free(s2);
+  if (s2) free(s2);
 }
 END_TEST
 
@@ -25,8 +23,7 @@ START_TEST(test_to_upper_3) {
   char *s2 = s21_to_upper(s1);
   char s3[] = "ALREADY UPPER";
   ck_assert_pstr_eq(s3, s2);
-  if (s2)
-    free(s2);
+  if (s2) free(s2);
 }
 END_TEST
 
@@ -35,8 +32,7 @@ START_TEST(test_to_upper_4) {
   char *s2 = s21_to_upper(s1);
   char s3[] = "";
   ck_assert_pstr_eq(s3, s2);
-  if (s2)
-    free(s2);
+  if (s2) free(s2);
 }
 END_TEST
 
@@ -45,8 +41,7 @@ START_TEST(test_to_upper_5) {
   char *s2 = s21_to_upper(s1);
   char s3[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   ck_assert_pstr_eq(s3, s2);
-  if (s2)
-    free(s2);
+  if (s2) free(s2);
 }
 END_TEST
 
@@ -55,8 +50,7 @@ START_TEST(test_to_upper_6) {
   char *s2 = s21_to_upper(s1);
   char s3[] = "_?};!234";
   ck_assert_pstr_eq(s3, s2);
-  if (s2)
-    free(s2);
+  if (s2) free(s2);
 }
 END_TEST
 
@@ -65,8 +59,7 @@ START_TEST(test_to_upper_7) {
   char *s2 = s21_to_upper(s1);
   char *s3 = s21_NULL;
   ck_assert_pstr_eq(s3, s2);
-  if (s2)
-    free(s2);
+  if (s2) free(s2);
 }
 END_TEST
 

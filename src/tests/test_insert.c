@@ -7,8 +7,7 @@ START_TEST(test_insert_1) {
   s21_size_t num = 7;
   char *s2 = s21_insert(s1, s3, num);
   ck_assert_pstr_eq(s4, s2);
-  if (s2)
-    free(s2);
+  if (s2) free(s2);
 }
 END_TEST
 
@@ -19,8 +18,7 @@ START_TEST(test_insert_2) {
   s21_size_t num = 7;
   char *s2 = s21_insert(s1, s3, num);
   ck_assert_pstr_eq(s4, s2);
-  if (s2)
-    free(s2);
+  if (s2) free(s2);
 }
 END_TEST
 
@@ -31,8 +29,7 @@ START_TEST(test_insert_3) {
   s21_size_t num = 0;
   char *s2 = s21_insert(s1, s3, num);
   ck_assert_pstr_eq(s4, s2);
-  if (s2)
-    free(s2);
+  if (s2) free(s2);
 }
 END_TEST
 
@@ -43,8 +40,7 @@ START_TEST(test_insert_4) {
   s21_size_t num = 3;
   char *s2 = s21_insert(s1, s3, num);
   ck_assert_pstr_eq(s4, s2);
-  if (s2)
-    free(s2);
+  if (s2) free(s2);
 }
 END_TEST
 
@@ -55,8 +51,7 @@ START_TEST(test_insert_5) {
   s21_size_t num = 10;
   char *s2 = s21_insert(s1, s3, num);
   ck_assert_pstr_eq(s4, s2);
-  if (s2)
-    free(s2);
+  if (s2) free(s2);
 }
 END_TEST
 
@@ -67,8 +62,7 @@ START_TEST(test_insert_6) {
   s21_size_t num = -1;
   char *s2 = s21_insert(s1, s3, num);
   ck_assert_pstr_eq(s4, s2);
-  if (s2)
-    free(s2);
+  if (s2) free(s2);
 }
 END_TEST
 
@@ -79,8 +73,7 @@ START_TEST(test_insert_7) {
   s21_size_t num = 0;
   char *s2 = s21_insert(s1, s3, num);
   ck_assert_pstr_eq(s4, s2);
-  if (s2)
-    free(s2);
+  if (s2) free(s2);
 }
 END_TEST
 
@@ -91,8 +84,7 @@ START_TEST(test_insert_8) {
   s21_size_t num = 0;
   char *s2 = s21_insert(s1, s3, num);
   ck_assert_pstr_eq(s4, s2);
-  if (s2)
-    free(s2);
+  if (s2) free(s2);
 }
 END_TEST
 
@@ -103,8 +95,7 @@ START_TEST(test_insert_9) {
   s21_size_t num = 0;
   char *s2 = s21_insert(s1, s3, num);
   ck_assert_pstr_eq(s4, s2);
-  if (s2)
-    free(s2);
+  if (s2) free(s2);
 }
 END_TEST
 
@@ -115,8 +106,7 @@ START_TEST(test_insert_10) {
   s21_size_t num = 0;
   char *s2 = s21_insert(s1, s3, num);
   ck_assert_pstr_eq(s2, s4);
-  if (s2)
-    free(s2);
+  if (s2) free(s2);
 }
 END_TEST
 
