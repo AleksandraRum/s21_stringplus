@@ -379,6 +379,9 @@ char* spec_float(double var_len, Flags flags, char* str) {
     copy_fr /= 10;
     size_fr++;
   }
+  if(integ==0) size_i = 1;
+  if((s21_size_t)flags.precision>size_fr) size_fr = flags.precision;
+
   s21_size_t size = size_fr + size_i;
   size++;
   if ((var_len < 0) || (flags.space) || (flags.plus)) size++;
@@ -444,13 +447,13 @@ char* s21_utoaf(Flags flags, long int fract, long int integ, char* fract_str,
     fract_str[i++] = copy_int % 10 + '0';
   } while ((copy_int /= 10) > 0.1);
   buf[i] = '\0';
-  if (var_len < 0) {
+  if ((var_len < 0) && (!flags.zero)) {
     *buf = '-';
     buf++;
-  } else if ((var_len > 0) && (flags.plus)) {
+  } else if ((var_len > 0) && (flags.plus) && (!flags.zero)) {
     *buf = '+';
     buf++;
-  } else if ((var_len > 0) && (flags.space)) {
+  } else if ((var_len > 0) && (flags.space) && (!flags.zero)) {
     *buf = ' ';
     buf++;
   }
