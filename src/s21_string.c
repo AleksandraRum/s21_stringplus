@@ -60,8 +60,10 @@ int s21_strncmp(const char *str1, const char *str2, s21_size_t n) {
   while (n) {
     c1 = *str1++;
     c2 = *str2++;
-    if (c1 != c2) return c1 - c2;
-    if (!c1) break;
+    if (c1 != c2)
+      return c1 - c2;
+    if (!c1)
+      break;
     n--;
   }
   return 0;
@@ -129,7 +131,8 @@ s21_size_t s21_strspn(const char *str, const char *sym) {
 char *olds;
 char *s21_strtok(char *str, const char *delim) {
   char *token = s21_NULL;
-  if (str == s21_NULL) str = olds;
+  if (str == s21_NULL)
+    str = olds;
 
   str += s21_strspn(str, delim);
   if (*str == '\0') {

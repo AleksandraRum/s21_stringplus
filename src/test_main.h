@@ -3,11 +3,11 @@
 
 #include "s21_c#_functions.h"
 #include "s21_sprintf.h"
+#include <check.h>
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <check.h>
 
 Suite *test_memchr(void);
 Suite *test_memcmp(void);

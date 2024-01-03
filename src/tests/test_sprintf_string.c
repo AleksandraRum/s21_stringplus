@@ -53,7 +53,7 @@ END_TEST
 START_TEST(sprintf_6_string) {
   char str1[200] = "";
   char str2[200] = "";
-  char *str3 = "%6.5s ";  // Test %.23s Test %3.s TEST %.s";
+  char *str3 = "%6.5s "; // Test %.23s Test %3.s TEST %.s";
   char *val = "PPAP";
   ck_assert_int_eq(sprintf(str1, str3, val), s21_sprintf(str2, str3, val));
   ck_assert_pstr_eq(str1, str2);
@@ -63,7 +63,7 @@ END_TEST
 START_TEST(sprintf_7_string) {
   char str1[200] = "";
   char str2[200] = "";
-  char *str3 = "%-10.5s";  // Test %-.8s Test %-7s TEST %-.s";
+  char *str3 = "%-10.5s"; // Test %-.8s Test %-7s TEST %-.s";
   char *val = "yu o";
   ck_assert_int_eq(sprintf(str1, str3, val), s21_sprintf(str2, str3, val));
   ck_assert_pstr_eq(str1, str2);
@@ -73,7 +73,7 @@ END_TEST
 START_TEST(sprintf_8_string) {
   char str1[200] = "";
   char str2[200] = "";
-  char *str3 = "%0s Test ";  // %0.s Test %0.0s TEST %0s GOD %.s";
+  char *str3 = "%0s Test "; // %0.s Test %0.0s TEST %0s GOD %.s";
   char *val = "really";
   ck_assert_int_eq(sprintf(str1, str3, val), s21_sprintf(str2, str3, val));
   ck_assert_pstr_eq(str1, str2);
@@ -83,7 +83,7 @@ END_TEST
 START_TEST(sprintf_9_string) {
   char str1[200] = "";
   char str2[200] = "";
-  char *str3 = "%+s";  // Test %+3.s Test %5.7s TEST %10s";
+  char *str3 = "%+s"; // Test %+3.s Test %5.7s TEST %10s";
   char *val = "don't";
   ck_assert_int_eq(sprintf(str1, str3, val), s21_sprintf(str2, str3, val));
   ck_assert_pstr_eq(str1, str2);

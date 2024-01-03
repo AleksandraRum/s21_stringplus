@@ -53,7 +53,7 @@ END_TEST
 START_TEST(sprintf_6_unsigned) {
   char str1[200] = "";
   char str2[200] = "";
-  char *str3 = "%6.5u ";  
+  char *str3 = "%6.5u ";
   unsigned int val = 3015;
   unsigned int val2 = 712;
   unsigned int val3 = 99;
@@ -67,7 +67,7 @@ END_TEST
 START_TEST(sprintf_7_unsigned) {
   char str1[200] = "";
   char str2[200] = "";
-  char *str3 = "%-10.5u ";  
+  char *str3 = "%-10.5u ";
   unsigned int val = 3015;
   ck_assert_int_eq(sprintf(str1, str3, val), s21_sprintf(str2, str3, val));
   ck_assert_pstr_eq(str1, str2);
@@ -77,7 +77,7 @@ END_TEST
 START_TEST(sprintf_8_unsigned) {
   char str1[200] = "";
   char str2[200] = "";
-  char *str3 = "%0u   ";  
+  char *str3 = "%0u   ";
   unsigned int val = 3015;
   ck_assert_int_eq(sprintf(str1, str3, val), s21_sprintf(str2, str3, val));
   ck_assert_pstr_eq(str1, str2);
@@ -87,7 +87,7 @@ END_TEST
 START_TEST(sprintf_9_unsigned) {
   char str1[200] = "";
   char str2[200] = "";
-  char *str3 = "%+u Test ";  
+  char *str3 = "%+u Test ";
   unsigned int val = 3015;
   ck_assert_int_eq(sprintf(str1, str3, val), s21_sprintf(str2, str3, val));
   ck_assert_pstr_eq(str1, str2);
@@ -118,7 +118,7 @@ END_TEST
 START_TEST(sprintf_12_unsigned) {
   char str1[200] = "";
   char str2[200] = "";
-  char *str3 = "%+u ";  
+  char *str3 = "%+u ";
   unsigned int val = 42949;
 
   ck_assert_int_eq(sprintf(str1, str3, val), s21_sprintf(str2, str3, val));
