@@ -1,6 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -std=c11 -g
 GCOVFLAGS = -fprofile-arcs -ftest-coverage
+
 # CHECKFLAGS = $(shell pkg-config --cflags --libs check)
 OS = $(shell uname -s)
 
@@ -10,14 +11,14 @@ else
 	TEST_LIBS =-lcheck
 endif
 
-all: clean s21_string.a test gcov_report
+all: clean s21_string.a
 
 s21_string.a: s21_string.o
 	ar rc s21_string.a obj/*.o
 	ranlib s21_string.a
 
 s21_string.o:
-	$(CC) $(CFLAGS) -c *.c
+	$(CC) $(CFLAGS) -c $(wildcard s21_*.c)
 	mkdir obj
 	mv *.o obj
 
@@ -48,7 +49,7 @@ fix:
 	clang-format -i *.h *.c *.h tests/*.c tests/*.h
 
 # leaks:
-# 	leaks -atExit -- ./s21_string_test
+#	leaks -atExit -- ./s21_string_test
 
 cpp:
 	cppcheck --enable=all --suppress=missingIncludeSystem ./*.c

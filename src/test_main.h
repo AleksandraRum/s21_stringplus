@@ -1,14 +1,13 @@
 #ifndef SRC_TESTS_MAIN_H
 #define SRC_TESTS_MAIN_H
 
-#include <check.h>
+#include "s21_c#_functions.h"
+#include "s21_sprintf.h"
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-#include "s21_sprintf.h"
-#include "s21_c#_functions.h"
-
+#include <string.h>
+#include <check.h>
 
 Suite *test_memchr(void);
 Suite *test_memcmp(void);
@@ -43,4 +42,4 @@ Suite *test_to_lower(void);
 Suite *test_insert(void);
 Suite *test_trim(void);
 
-#endif  
+#endif

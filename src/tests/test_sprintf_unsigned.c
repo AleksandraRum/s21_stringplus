@@ -15,8 +15,7 @@ START_TEST(sprintf_2_unsigned) {
   char str2[100] = "";
   char *str3 = "%u es";
   unsigned int val = 07464;
-  ck_assert_int_eq(sprintf(str1, str3, val),
-                   s21_sprintf(str2, str3, val));
+  ck_assert_int_eq(sprintf(str1, str3, val), s21_sprintf(str2, str3, val));
   ck_assert_pstr_eq(str1, str2);
 }
 END_TEST
@@ -26,8 +25,7 @@ START_TEST(sprintf_3_unsigned) {
   char str2[100] = "";
   char *str3 = "%hu u";
   unsigned int val = 3015;
-  ck_assert_int_eq(sprintf(str1, str3, val),
-                   s21_sprintf(str2, str3, val));
+  ck_assert_int_eq(sprintf(str1, str3, val), s21_sprintf(str2, str3, val));
   ck_assert_pstr_eq(str1, str2);
 }
 END_TEST
@@ -37,8 +35,7 @@ START_TEST(sprintf_4_unsigned) {
   char str2[100] = "";
   char *str3 = "%lu re";
   long unsigned int val = 3088675747373646;
-  ck_assert_int_eq(sprintf(str1, str3, val),
-                   s21_sprintf(str2, str3, val));
+  ck_assert_int_eq(sprintf(str1, str3, val), s21_sprintf(str2, str3, val));
   ck_assert_pstr_eq(str1, str2);
 }
 END_TEST
@@ -48,8 +45,7 @@ START_TEST(sprintf_5_unsigned) {
   char str2[100] = "";
   char *str3 = "%10u ";
   unsigned int val = 3015;
-  ck_assert_int_eq(sprintf(str1, str3, val),
-                   s21_sprintf(str2, str3, val));
+  ck_assert_int_eq(sprintf(str1, str3, val), s21_sprintf(str2, str3, val));
   ck_assert_pstr_eq(str1, str2);
 }
 END_TEST
@@ -57,7 +53,7 @@ END_TEST
 START_TEST(sprintf_6_unsigned) {
   char str1[200] = "";
   char str2[200] = "";
-  char *str3 = "%6.5u "; // %3.u TEST %.u";
+  char *str3 = "%6.5u ";  // %3.u TEST %.u";
   unsigned int val = 3015;
   unsigned int val2 = 712;
   unsigned int val3 = 99;
@@ -73,8 +69,7 @@ START_TEST(sprintf_7_unsigned) {
   char str2[200] = "";
   char *str3 = "%-10.5u ";  // Test %-.8u Test %-7u TEST %-.u";
   unsigned int val = 3015;
-  ck_assert_int_eq(sprintf(str1, str3, val),
-                   s21_sprintf(str2, str3, val));
+  ck_assert_int_eq(sprintf(str1, str3, val), s21_sprintf(str2, str3, val));
   ck_assert_pstr_eq(str1, str2);
 }
 END_TEST
@@ -84,8 +79,7 @@ START_TEST(sprintf_8_unsigned) {
   char str2[200] = "";
   char *str3 = "%0u   ";  //    Test %0.u Test %0.0u TEST %0u GOD %.u";
   unsigned int val = 3015;
-  ck_assert_int_eq(sprintf(str1, str3, val),
-                   s21_sprintf(str2, str3, val));
+  ck_assert_int_eq(sprintf(str1, str3, val), s21_sprintf(str2, str3, val));
   ck_assert_pstr_eq(str1, str2);
 }
 END_TEST
@@ -93,10 +87,9 @@ END_TEST
 START_TEST(sprintf_9_unsigned) {
   char str1[200] = "";
   char str2[200] = "";
-  char *str3 = "%+u Test ";   // %+3.u Test %+5.7u TEST %+10u";
+  char *str3 = "%+u Test ";  // %+3.u Test %+5.7u TEST %+10u";
   unsigned int val = 3015;
-  ck_assert_int_eq(sprintf(str1, str3, val),
-                   s21_sprintf(str2, str3, val));
+  ck_assert_int_eq(sprintf(str1, str3, val), s21_sprintf(str2, str3, val));
   ck_assert_pstr_eq(str1, str2);
 }
 END_TEST
@@ -106,9 +99,7 @@ START_TEST(sprintf_10_unsigned) {
   char str2[200] = "";
   char *str3 = "%-u gh";
   unsigned int val = 0;
-  ck_assert_int_eq(
-      sprintf(str1, str3,  val),
-      s21_sprintf(str2, str3, val));
+  ck_assert_int_eq(sprintf(str1, str3, val), s21_sprintf(str2, str3, val));
   ck_assert_pstr_eq(str1, str2);
 }
 END_TEST
@@ -119,8 +110,7 @@ START_TEST(sprintf_11_unsigned) {
   char *str3 = "% u Test ";
   unsigned int val = 32;
 
-  ck_assert_int_eq(sprintf(str1, str3, val),
-                   s21_sprintf(str2, str3, val));
+  ck_assert_int_eq(sprintf(str1, str3, val), s21_sprintf(str2, str3, val));
   ck_assert_pstr_eq(str1, str2);
 }
 END_TEST
@@ -131,8 +121,7 @@ START_TEST(sprintf_12_unsigned) {
   char *str3 = "%+u ";  // Test %+3.u Test %+5.7u TEST %+10u GOD %+.u";
   unsigned int val = 42949;
 
-  ck_assert_int_eq(sprintf(str1, str3, val),
-                   s21_sprintf(str2, str3, val));
+  ck_assert_int_eq(sprintf(str1, str3, val), s21_sprintf(str2, str3, val));
   ck_assert_pstr_eq(str1, str2);
 }
 END_TEST
@@ -143,8 +132,7 @@ START_TEST(sprintf_13_unsigned) {
   char *str3 = "%+.u";
   unsigned int val = 4294;
 
-  ck_assert_int_eq(sprintf(str1, str3, val),
-                   s21_sprintf(str2, str3, val));
+  ck_assert_int_eq(sprintf(str1, str3, val), s21_sprintf(str2, str3, val));
   ck_assert_pstr_eq(str1, str2);
 }
 END_TEST
@@ -154,12 +142,10 @@ START_TEST(sprintf_14_unsigned) {
   char str2[200] = "";
   char *str3 = "%06u ";
   unsigned int val = 8899;
-  ck_assert_int_eq(sprintf(str1, str3, val),
-                   s21_sprintf(str2, str3, val));
+  ck_assert_int_eq(sprintf(str1, str3, val), s21_sprintf(str2, str3, val));
   ck_assert_pstr_eq(str1, str2);
 }
 END_TEST
-
 
 START_TEST(sprintf_15_unsigned) {
   char str1[200] = "";
@@ -167,12 +153,10 @@ START_TEST(sprintf_15_unsigned) {
   char *str3 = "%+3.u ";
   unsigned int val = 429;
 
-  ck_assert_int_eq(sprintf(str1, str3, val),
-                   s21_sprintf(str2, str3, val));
+  ck_assert_int_eq(sprintf(str1, str3, val), s21_sprintf(str2, str3, val));
   ck_assert_pstr_eq(str1, str2);
 }
 END_TEST
-
 
 START_TEST(sprintf_16_unsigned) {
   char str1[200] = "";
@@ -189,8 +173,7 @@ START_TEST(sprintf_17_unsigned) {
   char str2[200] = "";
   char *str3 = "%- 15u sda";
   unsigned int val = -3231;
-  ck_assert_int_eq(sprintf(str1, str3, val),
-                   s21_sprintf(str2, str3, val));
+  ck_assert_int_eq(sprintf(str1, str3, val), s21_sprintf(str2, str3, val));
   ck_assert_pstr_eq(str1, str2);
 }
 END_TEST
@@ -200,8 +183,7 @@ START_TEST(sprintf_18_unsigned) {
   char str2[200] = "";
   char *str3 = "%-.u";
   unsigned int val = -3231;
-  ck_assert_int_eq(sprintf(str1, str3, val),
-                   s21_sprintf(str2, str3, val));
+  ck_assert_int_eq(sprintf(str1, str3, val), s21_sprintf(str2, str3, val));
   ck_assert_pstr_eq(str1, str2);
 }
 END_TEST
@@ -227,7 +209,7 @@ Suite *test_sprintf_unsigned(void) {
   tcase_add_test(tc, sprintf_15_unsigned);
   tcase_add_test(tc, sprintf_16_unsigned);
   tcase_add_test(tc, sprintf_17_unsigned);
-   tcase_add_test(tc, sprintf_18_unsigned);
+  tcase_add_test(tc, sprintf_18_unsigned);
 
   suite_add_tcase(s, tc);
   return s;

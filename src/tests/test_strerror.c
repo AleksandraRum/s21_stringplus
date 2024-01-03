@@ -36,7 +36,6 @@ START_TEST(strerror_4) {
 }
 END_TEST
 
-
 Suite *test_strerror(void) {
   Suite *s = suite_create("\033[45m-=S21_STRERROR=-\033[0m");
   TCase *tc = tcase_create("strerror_tc");

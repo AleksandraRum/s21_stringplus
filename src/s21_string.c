@@ -43,7 +43,6 @@ char *s21_strpbrk(const char *str, const char *sym) {
     pos++;
   }
   return (find == 1 ? ptr + pos : s21_NULL);
-
 }
 char *s21_strchr(const char *str, int c) {
   char *res = s21_NULL;
@@ -73,7 +72,7 @@ char *s21_strncpy(char *dest, const char *src, s21_size_t n) {
   for (; i < n && src[i] != '\0'; i++) {
     dest[i] = src[i];
   }
-   dest[i] = '\0';
+  dest[i] = '\0';
   return dest;
 }
 
@@ -120,26 +119,24 @@ char *s21_strcpy(char *dest, const char *source) {
 }
 
 s21_size_t s21_strspn(const char *str, const char *sym) {
-    s21_size_t cnt = 0;
-    while (*str && sym!= s21_NULL && s21_strchr(sym, *str++)) {
-        cnt++;
-    }
-    return cnt;
+  s21_size_t cnt = 0;
+  while (*str && sym != s21_NULL && s21_strchr(sym, *str++)) {
+    cnt++;
+  }
+  return cnt;
 }
-
 
 char *olds;
 char *s21_strtok(char *str, const char *delim) {
   char *token = s21_NULL;
   if (str == s21_NULL) str = olds;
 
-  str += s21_strspn(str, delim);  // handles possible trailing delims
+  str += s21_strspn(str, delim);
   if (*str == '\0') {
     olds = str;
     return s21_NULL;
   }
 
-  
   token = str;
   str = s21_strpbrk(token, delim);
   if (str == s21_NULL) {
@@ -174,7 +171,3 @@ char *s21_strrchr(const char *str, int c) {
   }
   return result;
 }
-
-
-
-

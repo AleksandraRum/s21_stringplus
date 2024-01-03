@@ -34,7 +34,7 @@ int main(void) {
                               test_trim(),
                               s21_NULL};
 
-  for (int i = 0; s21_string_test[i] != s21_NULL; i++) {  // (&& failed == 0)
+  for (int i = 0; s21_string_test[i] != s21_NULL; i++) {
     SRunner *sr = srunner_create(s21_string_test[i]);
 
     srunner_set_fork_status(sr, CK_NOFORK);

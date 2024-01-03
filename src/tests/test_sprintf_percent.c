@@ -15,8 +15,7 @@ START_TEST(sprintf_2_percent) {
   char str2[100] = "";
   char *str3 = " Te%%st ";
   int val = 3015;
-  ck_assert_int_eq(sprintf(str1, str3, val),
-                   s21_sprintf(str2, str3, val));
+  ck_assert_int_eq(sprintf(str1, str3, val), s21_sprintf(str2, str3, val));
   ck_assert_pstr_eq(str1, str2);
 }
 END_TEST

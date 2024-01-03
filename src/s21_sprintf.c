@@ -1,7 +1,6 @@
 #include "s21_sprintf.h"
+
 #include "s21_string.h"
-#include <stdarg.h>
-#include <stdbool.h>
 
 int s21_sprintf(char* str, const char* format, ...) {
   va_list list;
@@ -28,36 +27,32 @@ int s21_sprintf(char* str, const char* format, ...) {
   }
 
   *str = '\0';
-  
+
   va_end(list);
   return (str - ptr);
 }
 
 const char* set_flags(const char* format, Flags* flags) {
-
   switch (*format) {
-  case '-':
+    case '-':
       flags->minus = 1;
       break;
-  case '+':
+    case '+':
       flags->plus = 1;
       break;
-  case ' ' :
-  {
-      if(*(format-1)=='%' && (s21_is_digit(*(format+1)) || *(format + 1)=='-' || *(format + 1) == '+'))
-          flags->space = 1;
-  }
-      break;
-  case '0':
-  {
-      if(!s21_is_digit(*(format-1)))
-          flags->zero = 1;
-  }
-      break;
-  default:
+    case ' ': {
+      if (*(format - 1) == '%' &&
+          (s21_is_digit(*(format + 1)) || *(format + 1) == '-' ||
+           *(format + 1) == '+'))
+        flags->space = 1;
+    } break;
+    case '0': {
+      if (!s21_is_digit(*(format - 1))) flags->zero = 1;
+    } break;
+    default:
       break;
   }
-    
+
   if (flags->space && flags->plus) flags->space = 0;
   if (flags->minus && flags->zero) flags->zero = 0;
   return format;
@@ -210,8 +205,8 @@ void parsing_func(char* str, const char* format, Flags flags, va_list* args) {
   }
 }
 
-char* befor_dec(Flags flags, char* str, int i, s21_size_t size, long long int var_len)
-{
+char* befor_dec(Flags flags, char* str, int i, s21_size_t size,
+                long long int var_len) {
   char c = ' ';
   if (flags.precision >= flags.width) c = '0';
   if (((s21_size_t)i == size) && (flags.space == 1) && (var_len > 0)) {
@@ -256,7 +251,6 @@ char* befor_dec(Flags flags, char* str, int i, s21_size_t size, long long int va
       }
       if (!flags.minus) {
         while (x != 0) {
-         
           *str = c;
           str++;
           x--;
@@ -267,19 +261,15 @@ char* befor_dec(Flags flags, char* str, int i, s21_size_t size, long long int va
         str++;
         y--;
       }
-    }else if(flags.zero==1)
-    {
-      for(s21_size_t k=0;k<(s21_size_t)(flags.width-i);k++)
-      {
-        *str='0';
+    } else if (flags.zero == 1) {
+      for (s21_size_t k = 0; k < (s21_size_t)(flags.width - i); k++) {
+        *str = '0';
         str++;
       }
-    }
-    else if ((flags.minus == 1) && (flags.space == 1) && (var_len >= 0)) {
+    } else if ((flags.minus == 1) && (flags.space == 1) && (var_len >= 0)) {
       *str = ' ';
       str++;
-    } 
-	else if (flags.minus != 1) {
+    } else if (flags.minus != 1) {
       for (s21_size_t k = 0; k < (size - (s21_size_t)i); k++) {
         *str = c;
         str++;
@@ -307,14 +297,13 @@ char* spec_decimal(long long int var_len, Flags flags, char* str) {
   int i = s21_itoa(flags, var_len, size, decimal_str, buf);
   str = befor_dec(flags, str, i, size, var_len);
 
-  if ((flags.is_precision == 1) && (var_len==0) && (flags.width==0)){ // (flags.precision == 0) && (var_len == 0)) {
+  if ((flags.is_precision == 1) && (var_len == 0) && (flags.width == 0)) {
     *str = ' ';
-  } else if((flags.is_precision==1) && (flags.precision==0) && (var_len==0))
-  {
-    *str=' ';
+  } else if ((flags.is_precision == 1) && (flags.precision == 0) &&
+             (var_len == 0)) {
+    *str = ' ';
     str++;
-  }else
-  {
+  } else {
     for (int j = i - 1; j >= 0; j--) {
       *str = buf[j];
       str++;
@@ -334,7 +323,7 @@ char* spec_decimal(long long int var_len, Flags flags, char* str) {
 }
 
 int s21_itoa(Flags flags, long long int var_len, s21_size_t size,
-             char* decimal_str, char *buf) {
+             char* decimal_str, char* buf) {
   int i;
 
   int len = var_len;
@@ -346,8 +335,7 @@ int s21_itoa(Flags flags, long long int var_len, s21_size_t size,
   do {
     decimal_str[i++] = len % 10 + '0';
   } while ((len /= 10) > 0.1);
-  for (int j = 0; j <= i; j++)
-  {
+  for (int j = 0; j <= i; j++) {
     buf[j] = decimal_str[j];
   }
   if ((flags.plus == 1) && (var_len >= 0) &&
@@ -358,9 +346,10 @@ int s21_itoa(Flags flags, long long int var_len, s21_size_t size,
   if ((flags.minus == 1) && (var_len < 0) && ((s21_size_t)i == size))
     buf[i++] = '-';
   if (((s21_size_t)i < size) && (var_len < 0) && ((int)flags.precision < i) &&
-      ((int)flags.width > i))
-    {	buf[i++] = '-';		}
-    buf[i] = '\0';
+      ((int)flags.width > i)) {
+    buf[i++] = '-';
+  }
+  buf[i] = '\0';
   return i;
 }
 
@@ -398,35 +387,25 @@ char* spec_float(double var_len, Flags flags, char* str) {
   char* fract_str = malloc(sizeof(char) * (size + 1));
   fract_str[size] = '\0';
   s21_utoaf(flags, fract, integ, fract_str, buf, var_len, x);
-  if((!flags.minus) && (!flags.zero))
-  {
-    while((s21_size_t)flags.width>size)
-    {
+  if ((!flags.minus) && (!flags.zero)) {
+    while ((s21_size_t)flags.width > size) {
       *str = ' ';
       str++;
       size++;
     }
-  }
-  else if(flags.zero)
-  {
-    if(var_len < 0)
-    {
-      *str='-';
+  } else if (flags.zero) {
+    if (var_len < 0) {
+      *str = '-';
+      str++;
+    } else if (var_len > 0 && flags.plus) {
+      *str = '+';
+      str++;
+    } else if (var_len > 0 && flags.space) {
+      *str = ' ';
       str++;
     }
-    else if(var_len>0 && flags.plus)
-    {
-      *str='+';
-      str++;
-    }
-    else if(var_len>0 && flags.space)
-    {
-      *str =' ';
-      str++;
-    }
-    while((s21_size_t)flags.width>size)
-    {
-      *str='0';
+    while ((s21_size_t)flags.width > size) {
+      *str = '0';
       str++;
       size++;
     }
@@ -482,23 +461,23 @@ char* s21_utoaf(Flags flags, long int fract, long int integ, char* fract_str,
 
   if (fract_str != s21_NULL) free(fract_str);
   fract_str = s21_NULL;
-  return buf; 
+  return buf;
 }
 
 char* spec_char(const char c, Flags* flags, char* str) {
   if (flags->minus == 1) {
     ch2str(c, str);
   }
-  if (flags->space)
-    str++;
+  if (flags->space) str++;
   str = space2str(flags->width, 1, flags->zero, str);
 
   if (flags->minus == 0) {
-    if(c==0) ch2str(' ', str);
-    else ch2str(c, str);
+    if (c == 0)
+      ch2str(' ', str);
+    else
+      ch2str(c, str);
   }
-  if (!flags->space )
-        str++;
+  if (!flags->space) str++;
   *str = '\0';
   return str;
 }
@@ -526,66 +505,61 @@ char* spec_string(char* s, Flags* flags, char* str) {
   char* ptr = str;
   int length = 0;
   if (s == s21_NULL) {
-//    s21_strcpy(ptr, "(null)");
-//    ptr += sizeof("(null)");
-      length = s21_strlen("(null)");
+    length = s21_strlen("(null)");
+  } else
+    length = s21_strlen(s);
+
+  int lenForFill = 0;
+  if (flags->width < flags->precision && flags->width < length)
+    lenForFill = flags->precision;
+  else if (flags->width > flags->precision && flags->width > length &&
+           flags->precision > length)
+    lenForFill = flags->width;
+  else if (flags->width > flags->precision && flags->precision != 0 &&
+           flags->width > length && flags->precision < length) {
+    lenForFill = flags->width;
+    length = flags->precision;
+  } else if (flags->width > flags->precision && flags->width < length) {
+    lenForFill = flags->width;
+    length = flags->precision;
+  } else if (flags->width < flags->precision && flags->width > length)
+    lenForFill = flags->width;
+  else if (flags->width == flags->precision && flags->width > length)
+    lenForFill = flags->width;
+  else if (flags->width != 0 && flags->precision != 0 &&
+           flags->width == flags->precision && flags->width < length) {
+    lenForFill = flags->precision;
+    length = flags->precision;
+  } else if (flags->width && flags->precision == 0) {
+    lenForFill = flags->width;
+  } else if (flags->width == 0 && flags->precision == 0 &&
+             flags->is_precision) {
+    lenForFill = 0;
+    length = 0;
   }
-  else length = s21_strlen(s);
 
-        int lenForFill = 0;
-        if (flags->width < flags->precision && flags->width < length)
-            lenForFill = flags->precision;
-        else if (flags->width > flags->precision && flags->width > length && flags->precision > length)  //-
-            lenForFill = flags->width;
-        else if (flags->width > flags->precision && flags->precision != 0 && flags->width > length && flags->precision < length) //-
-        {
-            lenForFill = flags->width;
-            length = flags->precision;
-        }
-        else if (flags->width > flags->precision && flags->width < length)  //-
-        {
-            lenForFill = flags->width;
-            length = flags->precision;
-        }
-        else if (flags->width < flags->precision && flags->width > length)	//-
-            lenForFill = flags->width;
-        else if (flags->width == flags->precision && flags->width > length)	//-
-            lenForFill = flags->width;
-        else if (flags->width != 0 && flags->precision != 0 && flags->width == flags->precision && flags->width < length)
-        {
-            lenForFill = flags->precision;
-            length = flags->precision;
-        }
-        else if (flags->width && flags->precision == 0)
-        {
-            lenForFill = flags->width;
-        }
-        else if (flags->width == 0 && flags->precision == 0 && flags->is_precision)
-        {
-            lenForFill = 0;
-            length = 0;
-        }
+  if (flags->minus == 1) {
+    for (int i = 0; i < length; i++) {
+      if (s == s21_NULL)
+        str[i] = ("(null)")[i];
+      else
+        str[i] = s[i];
+    }
+    str = str + length;
+    str = space2str(lenForFill, length, flags->zero, str);
+  } else {
+    str = space2str(lenForFill, length, flags->zero, str);
+    for (int i = 0; i < length; i++) {
+      if (s == s21_NULL)
+        str[i] = ("(null)")[i];
+      else
+        str[i] = s[i];
+    }
+    str = str + length;
+  }
+  if (ptr) ptr = str;
 
-        if (flags->minus == 1) {
-            for (int i = 0; i < length; i++) {
-              if(s==s21_NULL)  str[i] = ("(null)")[i];
-              else str[i] = s[i];
-            }
-            str = str + length;
-            str = space2str(lenForFill, length, flags->zero, str);
-        }
-        else {
-            str = space2str(lenForFill, length, flags->zero, str);
-            for (int i = 0; i < length; i++) {
-              if(s==s21_NULL)  str[i] = ("(null)")[i];
-              else str[i] = s[i];
-
-            }
-            str = str + length;
-        }
-        if (ptr) ptr = str;
-    //}
-    *ptr = '\0';
+  *ptr = '\0';
   return ptr;
 }
 
@@ -593,14 +567,13 @@ char* spec_pointer(void* pointer, Flags* flags, char* str) {
   static char ar1[] = "0123456789abcdef";
   static char buffer[50];
   char* ptr;
-  // int i = 0;
+
   if (pointer == s21_NULL) {
     s21_strcpy(str, "(null)");
     str += sizeof("(null)");
   } else {
     unsigned long long num = (unsigned long long)pointer;
-    // if (pointer == NULL)      flags->error = 1;
-    // else    {
+
     ptr = &buffer[49];
     *ptr = '\0';
     do {
@@ -610,13 +583,7 @@ char* spec_pointer(void* pointer, Flags* flags, char* str) {
 
     int pointer_len = (int)s21_strlen(ptr);
     pointer_len += 2;
-    // if (pointer_len < flags->width && flags->minus == 0) {
-    // str = space2str(flags->width, pointer_len, flags->zero, str);
-    // }
-    // if (pointer_len < flags->width && flags->minus == 1) {
-    // str = space2str(flags->width, pointer_len, flags->zero, str);
-    // }
-    // pointer_len += 2;
+
     *--ptr = 'x';
     *--ptr = '0';
     if (flags->minus == 1) {
@@ -634,12 +601,7 @@ char* spec_pointer(void* pointer, Flags* flags, char* str) {
     }
   }
 
-  /* while (ptr[i]) {
-  str[i] = ptr[i];
-  i++;
- } */
-  // str = str + pointer_len;
-   *str = '\0';
+  *str = '\0';
   return str;
 }
 
@@ -647,10 +609,7 @@ int get_len_num(uint64_t num) {
   int len = 0;
 
   if (num == 0) len = 1;
-  /* else if (num < 0) {
-          len++;
-          num = -num;
-  } */
+
   while (num >= 1) {
     len++;
     num /= 10;
@@ -659,8 +618,6 @@ int get_len_num(uint64_t num) {
 }
 char* s21_utoa(uint64_t n, int len) {
   char* str = (char*)malloc((len + 1) * sizeof(char));
-  // if (str == NULL)
-  //	return NULL;
 
   str[len] = '\0';
   while (len--) {

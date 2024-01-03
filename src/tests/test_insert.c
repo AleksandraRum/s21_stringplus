@@ -1,6 +1,5 @@
 #include "../test_main.h"
 
-
 START_TEST(test_insert_1) {
   char s1[30] = "hello, world!";
   char s3[] = "hELLO, WORLD!";
