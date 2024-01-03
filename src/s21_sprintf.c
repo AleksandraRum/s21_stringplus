@@ -494,7 +494,8 @@ char* spec_char(const char c, Flags* flags, char* str) {
   str = space2str(flags->width, 1, flags->zero, str);
 
   if (flags->minus == 0) {
-     ch2str(c, str);
+    if(c==0) ch2str(' ', str);
+    else ch2str(c, str);
   }
   if (!flags->space )
         str++;
@@ -523,13 +524,14 @@ char* space2str(int width, int lenght, int zero_fill, char* str) {
 
 char* spec_string(char* s, Flags* flags, char* str) {
   char* ptr = str;
+  int length = 0;
   if (s == s21_NULL) {
-    s21_strcpy(ptr, "(null)");
-    ptr += sizeof("(null)");
+//    s21_strcpy(ptr, "(null)");
+//    ptr += sizeof("(null)");
+      length = s21_strlen("(null)");
   }
-  else
-  {
-        int length = s21_strlen(s);
+  else length = s21_strlen(s);
+
         int lenForFill = 0;
         if (flags->width < flags->precision && flags->width < length)
             lenForFill = flags->precision;
@@ -566,7 +568,8 @@ char* spec_string(char* s, Flags* flags, char* str) {
 
         if (flags->minus == 1) {
             for (int i = 0; i < length; i++) {
-                str[i] = s[i];
+              if(s==s21_NULL)  str[i] = ("(null)")[i];
+              else str[i] = s[i];
             }
             str = str + length;
             str = space2str(lenForFill, length, flags->zero, str);
@@ -574,13 +577,14 @@ char* spec_string(char* s, Flags* flags, char* str) {
         else {
             str = space2str(lenForFill, length, flags->zero, str);
             for (int i = 0; i < length; i++) {
-                str[i] = s[i];
+              if(s==s21_NULL)  str[i] = ("(null)")[i];
+              else str[i] = s[i];
 
             }
             str = str + length;
         }
         if (ptr) ptr = str;
-    }
+    //}
     *ptr = '\0';
   return ptr;
 }
