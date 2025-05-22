@@ -1,6 +1,7 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -std=c11 -g
+CFLAGS = -Wall -Wextra -Werror -std=c11 -g -I/opt/homebrew/opt/check/include
 GCOVFLAGS = -fprofile-arcs -ftest-coverage
+LDFLAGS = -L/opt/homebrew/opt/check/lib
 
 # CHECKFLAGS = $(shell pkg-config --cflags --libs check)
 OS = $(shell uname -s)
@@ -23,7 +24,7 @@ s21_string.o:
 	mv *.o obj
 
 test:
-	$(CC) $(CFLAGS) test_main.c tests/*.c s21_string.a $(TEST_LIBS) -o s21_string_test
+	$(CC) $(CFLAGS) $(LDFLAGS) test_main.c tests/*.c s21_string.a $(TEST_LIBS) -o s21_string_test
 	./s21_string_test
 
 brew:
