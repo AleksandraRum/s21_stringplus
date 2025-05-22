@@ -16,13 +16,13 @@
 
 ## Реализованные компоненты
 
-1. Базовые функции (string.h)
+### 1. Базовые функции (string.h)
 
 Реализовано 15+ функций:
 memchr, memcmp, memcpy, memset, strncat, strchr, strncmp, strncpy, strcspn, strerror, strlen, strpbrk, strrchr, strstr, strtok
 — все с префиксом s21_.
 
-2. sprintf (частичная реализация)
+### 2. sprintf (частичная реализация)
 
 Поддерживаемые элементы:
 - Спецификаторы: c, d, f, s, u, %
@@ -31,7 +31,7 @@ memchr, memcmp, memcpy, memset, strncat, strchr, strncmp, strncpy, strcspn, stre
 - Точность: .число
 - Длина: h, l
 
-3. Дополнительные модификаторы sprintf
+### 3. Дополнительные модификаторы sprintf
 
 Поддерживаются:
 - Доп. спецификаторы: g, G, e, E, x, X, o, p
@@ -39,7 +39,7 @@ memchr, memcmp, memcpy, memset, strncat, strchr, strncmp, strncpy, strcspn, stre
 - Ширина/точность через *
 - Длина: L
 
-4. Специальные функции обработки строк
+### 4. Специальные функции обработки строк
 
 Реализованы дополнительно:
 - s21_to_upper
